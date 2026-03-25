@@ -1,0 +1,28 @@
+import 'dart:io';
+
+void main() {
+
+ 
+   print("Enter temperature:");
+ var temp = int.parse(stdin.readLineSync().toString());
+
+  print("Enter your choice :");
+  print("1. Celsius to fahrenheit");
+  print("2. fahrenheit to Celsius");
+  var choice = int.parse(stdin.readLineSync().toString());
+  
+  switch(choice)
+  {
+      case 1:
+      var fahrenheit = (temp *  9 / 5) + 32;
+      print("fahenheit : $fahrenheit");
+      
+      case 2:
+      var  calsisus = (temp - 32) * 5/9;
+      print("calsisus : $calsisus");
+      
+      default :
+      print("You entered wrong choice");
+      
+  }
+}

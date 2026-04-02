@@ -1,0 +1,58 @@
+ class A
+{
+    
+    void a()
+    {
+        print("A called");
+    }
+}
+class B extends A
+{
+    void b()
+    {
+        print("B called");
+    }
+    
+}
+class C extends B
+{
+    void c()
+    {
+        print("C called");
+    }
+       
+ }
+    class D implements B,C
+    {
+       void d()
+    {
+        print("d1");
+    }
+    @override
+    void a()
+    {
+        print("a1");
+    }
+    @override
+    void b()
+    {
+        print("b1");
+    }
+    @override
+    void c()
+    {
+        print("c1");
+    }
+}
+    
+
+void main()
+{
+   var d = D();
+   d.a();
+   d.b();
+   d.c();
+   d.d();
+   
+   
+}

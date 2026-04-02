@@ -1,0 +1,34 @@
+class A
+{
+    void a()
+    {
+        
+    }
+}
+class B 
+{
+    void b()
+    {
+        
+    }
+}
+class C implements A,B
+{
+    @override
+    void a()
+    {
+        print("A called");
+    }
+     @override
+     void b()
+     {
+        print("B called");
+     }
+}
+void main()
+{
+   var c1 = C();
+   c1.a();
+   c1.b();
+   
+}

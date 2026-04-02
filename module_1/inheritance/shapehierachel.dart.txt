@@ -1,0 +1,38 @@
+import 'dart:io';
+
+class Shape {
+  int A = 0;
+  int B = 0;
+
+  void a() {
+    print("Enter a number for A:");
+    A = int.parse(stdin.readLineSync()!);
+
+    print("Enter a number for B:");
+    B = int.parse(stdin.readLineSync()!);
+  }
+}
+
+class Rectangle extends Shape {
+  void b() {
+    var rec = A * B;
+    print("Rectangle area: $rec");
+  }
+}
+
+class Triangle extends Shape {
+  void c() {
+    var tri = 0.5 * A * B;
+    print("Triangle area: $tri");
+  }
+}
+
+void main() {
+  Rectangle r = Rectangle();
+  r.a();
+  r.b();
+
+  Triangle t = Triangle();
+  t.a();
+  t.c();
+}

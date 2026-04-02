@@ -1,0 +1,25 @@
+import 'dart:io';
+class Model
+{
+  var _name;
+  var _city;
+  
+  set name(value)
+  {
+      _name = value;
+  }
+  get name => _name;
+  
+  get city => _city;
+  set city(value)
+  {
+      _city = value;
+  }
+}
+void main() 
+{
+Model m = Model();
+m.name="jay";
+m.city="Rajkot";
+print("${m.name} from ${m.city}");
+}

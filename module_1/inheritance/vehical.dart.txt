@@ -1,0 +1,30 @@
+class Vehicle
+{
+    void a()
+    {
+        print("Car    /    Bike");
+    }
+}
+class Car extends Vehicle
+{
+    void b()
+    {
+        print("car :\n  Wheels = 4,\n  Seats = 4,\n  Gear = automatic and manual,\n  Fule tank = normaly 45-60 leaters");
+    }
+}
+class Bike extends Vehicle
+{
+    void c()
+    {
+        print("Bike :\n  Wheels = 2,\n  Seats = 1,\n  Gear = manual,\n  Fule tank = normaly 11-15 leaters");
+    }
+}
+void main()
+{
+    Car c = Car();
+    Bike b = Bike();
+    c.a();
+    c.b();
+    b.c();
+    
+}

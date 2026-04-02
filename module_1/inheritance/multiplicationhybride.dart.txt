@@ -1,0 +1,49 @@
+class A {
+  int v = 1;
+
+  void a() {
+    print("v = $v");
+  }
+}
+
+class B extends A {
+  int n = 2;
+
+  void b() {
+    print("n = $n");
+  }
+}
+
+class C extends A {
+  int s = 3;
+
+  void c() {
+    print("s = $s");
+  }
+}
+
+class D extends A {
+  int f = 4;
+
+  void d() {
+    
+    B O = B();
+    C j = C();
+
+    var ans = v * O.n * j.s * f;
+    print("Answer: $ans");
+  }
+}
+
+void main() {
+  var d = D();
+  d.a();
+
+  B b = B();
+  b.b();
+
+  C c = C();
+  c.c();
+
+  d.d();
+}

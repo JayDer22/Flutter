@@ -1,0 +1,14 @@
+final class A
+{
+    
+}
+class B extends A
+{
+    
+}
+void main()
+{
+    final speed = 60;
+    speed = 120;
+    print(speed);
+}

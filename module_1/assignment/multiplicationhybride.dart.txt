@@ -1,0 +1,68 @@
+import 'dart:io';
+
+class A {
+  var v;
+  void a() {
+    print("v :");
+    v = int.parse(stdin.readLineSync().toString());
+  }
+}
+
+class B extends A {
+  var n;
+
+  void b() {
+    print("n :");
+    n = int.parse(stdin.readLineSync().toString());
+  }
+}
+
+class C extends A {
+  var s;
+
+  void c() {
+    print("s :");
+    s = int.parse(stdin.readLineSync().toString());
+  }
+}
+
+class D implements B, C {
+  
+  @override
+  var v;
+
+  @override
+  var n;
+
+  @override
+  var s;
+
+ 
+  @override
+  void a() {}
+
+  @override
+  void b() {}
+
+  @override
+  void c() {}
+
+  
+  void d(B b, C c) {
+    var ans = b.v * b.n * c.s;
+    print("Answer: $ans");
+  }
+}
+
+void main() {
+  B b1 = B();
+  b1.a();
+  b1.b();
+
+  C c1 = C();
+  c1.a();   // IMPORTANT
+  c1.c();
+
+  D d1 = D();
+  d1.d(b1, c1);
+}

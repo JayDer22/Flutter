@@ -1,0 +1,40 @@
+import 'dart:io';
+
+class Book 
+{
+  var title;
+  var author;
+  var year;
+
+  void display() 
+{
+    print("Enter Title:");
+    title = stdin.readLineSync().toString();
+
+    print("Enter Author name:");
+    author = stdin.readLineSync().toString();
+
+    print("Enter year:");
+    year = int.parse(stdin.readLineSync().toString());
+}
+
+  void old() 
+{
+    if (2026 - year >= 10) 
+    {
+      print("Book is over 10 years old");
+    } 
+   else 
+    {
+      print("Book is not 10 years old");
+    }
+  }
+}
+
+void main()  
+{
+  Book b = Book();   
+
+  b.display();       
+  b.old();           
+}

@@ -1,0 +1,13 @@
+import 'dart:io';
+
+    void main()
+    {
+        try{
+      String text = File('C:/jay/New folder/sample.txt').readAsStringSync();
+      print(text);
+        }
+        catch(e)
+        {
+            print("File not found ");
+        }
+    }

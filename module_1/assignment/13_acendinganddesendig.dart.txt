@@ -1,0 +1,24 @@
+import 'dart:io';
+void main() 
+{
+    List<int> number = [];
+    print("Enter your number :");
+    var a = int.parse(stdin.readLineSync().toString());
+    for(int k = 1;k <= a;k++)
+    {
+        int value = int.parse(stdin.readLineSync().toString()!);
+        number.add(value);
+       
+    }
+    print("Ascending order");
+    for(int i = 0;i < number.length;i++)
+    {
+        print(number[i]);
+    }
+    print("Descenidng order");
+    for(int j = number.length-1;j >= 0;j--)
+    {
+        print(number[j]);
+    }
+    
+}

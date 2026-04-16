@@ -1,0 +1,56 @@
+import 'dart:io';
+
+void main() {
+  while (true) {
+    try {
+      print("Enter your first number :");
+      var a = int.parse(stdin.readLineSync().toString());
+
+      print("Enter your second number :");
+      var b = int.parse(stdin.readLineSync().toString());
+
+      print("Enter 1 if you want to sum");
+      print("Enter 2 if you want multiplication");
+      print("Enter 3 if you want division");
+      print("Enter 4 if you want subtraction");
+
+      var choice = int.parse(stdin.readLineSync().toString());
+
+      switch (choice) {
+        case 1:
+          print(a + b);
+          break;
+
+        case 2:
+          print(a * b);
+          break;
+
+        case 3:
+          if (b == 0) {
+            print("Cannot divide by zero");
+          } else {
+            print(a / b);
+          }
+          break;
+
+        case 4:
+          print(a - b);
+          break;
+
+        default:
+          print("You entered wrong choice");
+      }
+
+      print("Do you want to continue? yes/no");
+      var cho = stdin.readLineSync();
+
+      if (cho != 'yes') {
+        break;
+      }
+    } catch (e) {
+      print("Invalid input! Please enter numbers only.");
+    }
+  }
+
+  print("Calculator closed");
+}

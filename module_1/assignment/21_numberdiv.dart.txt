@@ -1,0 +1,21 @@
+import 'dart:io';
+void main()
+{
+     try
+    {
+    print("Enter first number :");
+    var f = int.parse(stdin.readLineSync().toString());
+    print("Enter second number :");
+    var s = int.parse(stdin.readLineSync().toString());
+    int ans = f ~/ s;
+    
+    
+       print(ans);
+        
+    }
+    catch(e)
+    {
+        print("Error Ocured : $e");
+    }
+    
+}

@@ -1,0 +1,17 @@
+import 'dart:io';
+void main() 
+{
+   
+    print("Enter your words :");
+    var a = stdin.readLineSync().toString()!;
+    List<String> word = a.split(" ");
+    
+    Set<String> b = word.toSet();
+    
+    List<String> c = b.toList();
+    
+    c.sort();
+    print("Words in alphabetical order :");
+    print(c);
+    
+}

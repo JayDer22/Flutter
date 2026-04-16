@@ -1,0 +1,25 @@
+import 'dart:io';
+void main() 
+{
+   
+    print("Enter your words :");
+    var a = stdin.readLineSync().toString()!;
+    Map<String, int> f = {};
+    for(int i = 0;i < a.length;i++)
+    {
+        String ch = a[i];
+        if(ch == " ")continue;
+        
+        if(f[ch] == null)
+        {
+            f[ch] = 1;
+        }
+        else
+        {
+            f[ch] = f[ch]! + 1;
+        }
+    }
+    
+    print(f);
+    
+}

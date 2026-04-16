@@ -1,1 +1,305 @@
+import 'package:flutter/material.dart';
+import 'package:my_firstamulapp/profilescreen.dart';
 
+void main() {
+  runApp(my_firstamulapp());
+}
+
+class my_firstamulapp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FirstScreen(),
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Product List"),
+      ),
+
+
+      body: Column(
+        children: [
+          SizedBox(height: 10),
+          Text(
+            "Welcome to Amul Products",
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 10),
+
+          Expanded(
+            child: Profilescreen(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+--------------------------------------------------------
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class Profilescreen extends StatelessWidget
+{
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(28.0),
+
+          child: Column(
+            children: [
+              Container
+                (
+                color: Colors.blue.shade200,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("image.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Gold Milk",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price : 58/-   500ml  Mfg :- 18/02/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.pink.shade100,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Pasteurised Butter",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 60 /-  100 mg   Mfg :- 14/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.blue.shade200,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_1.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul ButterMilk",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 30 /-  200 mg   Mfg :- 05/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    )
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.pink.shade100,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_2.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Cow Ghee",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 650 /-  1 kg   Mfg :- 25/02/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 16,),
+              Container
+                (
+                color: Colors.blue.shade200,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_3.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Masti Curd",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 110 /-  1kg   Mfg :- 10/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.pink.shade100,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_4.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Yogurt",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 50 /-  100 mg   Mfg :- 07/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.blue.shade200,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_5.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Cream",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 400 /-  1 kg   Mfg :- 01/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.pink.shade100,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_6.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Cheese",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 30 /-  200 mg   Mfg :- 05/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.blue.shade200,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_7.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Lassi",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 22 /-  200 ml  Mfg :- 09/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container
+                (
+                color: Colors.pink.shade100,
+                padding: EdgeInsets.all(16.00),
+                child: Row
+                  (
+                  children:
+                  [
+                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img_8.png"),),
+                    SizedBox(width: 16),
+                    Column
+                      (
+                      children:
+                      [
+                        Text("Amul Paneer",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
+                        Text("Price: 399 /-  1 kg   Mfg :- 15/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+    );
+  }
+
+}

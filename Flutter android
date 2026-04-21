@@ -1,115 +1,129 @@
-import 'package:flutter/material.dart';
-import 'package:my_firstamulapp/profilescreen.dart';
+class Like extends StatefulWidget {
+  const Like({super.key});
 
-void main() {
-  runApp(my_firstamulapp());
-}
-
-class my_firstamulapp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: FirstScreen(),
-    );
-  }
+  State<Like> createState() => _LikeState();
 }
 
-class FirstScreen extends StatelessWidget {
+class _LikeState extends State<Like> {
+
+  bool _isHappy = true; // 🔹 Mood variable
+  //  Heart Like Toggle
+  bool isLiked = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Product List"),
+        title: Text("Profile"),
+        centerTitle: true,
       ),
 
-
-      body: Column(
-        children: [
-          SizedBox(height: 10),
-          Text(
-            "Welcome to Amul Products",
-            style: TextStyle(fontSize: 20),
-          ),
-          SizedBox(height: 10),
-
-          Expanded(
-            child: Profilescreen(),
-          ),
-        ],
-      ),
-    );
-  }
-}
---------------------------------------------------------
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-class Profilescreen extends StatelessWidget
-{
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(28.0),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(28.0),
 
           child: Column(
             children: [
-              Container
-                (
-                color: Colors.blue.shade200,
-                padding: EdgeInsets.all(16.00),
-                child: Row
-                  (
-                  children:
-                  [
-                    CircleAvatar(radius: 40,backgroundImage: AssetImage("image.png"),),
-                    SizedBox(width: 16),
-                    Column
-                      (
-                      children:
-                      [
-                        Text("Amul Gold Milk",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
-                        Text("Price : 58/-   500ml  Mfg :- 18/02/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
-                      ],
+
+              // 🔹 PROFILE CARD
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.pink.shade100,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: EdgeInsets.all(16),
+
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage("riddhita.jpg"),
                     ),
 
+                    SizedBox(width: 16),
 
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Riddhita Gosai",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text("Age : 21 yrs   Dob:- 18/09/2004"),
+                        Text("Jetpur"),
+                      ],
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
-              Container
-                (
-                color: Colors.pink.shade100,
+
+
+              SizedBox(height: 30),
+
+              // ❤️ HEART BUTTON (Stateful)
+              IconButton(
+                icon: Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: isLiked ? Colors.red : Colors.black,
+                  size: 40,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isLiked = !isLiked;
+                  });
+                },
+              ),
+
+              SizedBox(height: 40),
+
+              // 🔹 MOOD SECTION
+              Text(
+                'Current Mood',
+                style: TextStyle(fontSize: 18),
+              ),
+
+              SizedBox(height: 10),
+
+              Text(
+                _isHappy ? 'Happy 😊' : 'Sad 😓',
+                style: TextStyle(fontSize: 26),
+              ),
+
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _isHappy = !_isHappy; // 🔹 Toggle mood
+                  });
+                },
+                child: Text("Change Mood"),
+              ),
+              SizedBox(height: 120),
+              Container(
+                color: Colors.white,
                 padding: EdgeInsets.all(16.00),
                 child: Row
                   (
-                  children:
-                  [
-                    CircleAvatar(radius: 40,backgroundImage: AssetImage("img.png"),),
-                    SizedBox(width: 16),
-                    Column
-                      (
-                      children:
-                      [
-                        Text("Amul Pasteurised Butter",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),),
-                        Text("Price: 60 /-  100 mg   Mfg :- 14/03/2026",style: TextStyle(fontSize: 15.00,fontWeight: FontWeight.w200),)
-                      ],
-                    ),
-
-
+                  children: [
+                    Text("                         \t \t \t  \t  \t \t \t \t                                       © 2026 [Riddhita Gosai From Tops]. \n                                                                       All rights reserved. Terms and conditions applied",style: TextStyle(fontSize: 20.00,fontWeight: FontWeight.w200,color: Colors.black),)
                   ],
                 ),
-              ),
-              SizedBox(height: 10,),
-              Container
-                (
-                color: Colors.blue.shade200,
-                padding: EdgeInsets.all(16.00),
-                child: Row
-                  (
+              )
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}                  (
                   children:
                   [
                     CircleAvatar(radius: 40,backgroundImage: AssetImage("img_1.png"),),

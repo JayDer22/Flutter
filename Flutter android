@@ -308,3 +308,73 @@ class ResumAIHomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+Enhance my existing Flutter resume form screen by adding a real-time live preview.
+
+Context:
+- I already have a dashboard screen with a "Start Building" button
+- On click, it navigates to a Resume Form screen
+- The form screen is already implemented and working
+
+IMPORTANT:
+- Do NOT modify existing navigation or dashboard code
+- Do NOT rewrite the entire form
+- Only extend the current form screen
+- Keep all existing fields and logic intact
+
+Goal:
+- Add a live resume preview that updates instantly as the user types
+
+Requirements:
+
+1. Integration Approach:
+- Wrap existing form with proper state management (Provider or ValueNotifier preferred for simplicity)
+- Reuse existing TextEditingControllers if already present
+- Add listeners to controllers instead of replacing logic
+
+2. Layout Changes (Minimal & Safe):
+- Convert current layout into:
+  - Column:
+    - Top: Existing Form (unchanged UI)
+    - Bottom: Live Preview Card
+
+(OR use tabs if space is limited, but do not break current layout)
+
+3. Live Preview:
+- Create a separate widget: ResumePreviewWidget
+- It should display:
+  - Name
+  - Job Title
+  - Summary
+  - Skills
+  - Experience
+- Style it like a clean resume card
+
+4. Real-Time Updates:
+- Use controller listeners or ValueNotifier
+- Every keystroke updates preview instantly
+- No submit button required
+
+5. Performance:
+- Use lightweight state updates
+- Avoid rebuilding entire screen unnecessarily
+
+6. Code Safety:
+- Do NOT remove existing code
+- Only add new widgets and minimal wrapper logic
+- Keep changes isolated and modular
+
+7. Output:
+- Show only the modified form screen code
+- Clearly mark:
+  - NEW code
+  - MODIFIED sections
+
+Optional:
+- Add toggle button: "Show Preview"
+- Add animation when preview updates
+
+Goal:
+- Seamless live preview feature added without breaking existing app flow

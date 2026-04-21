@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // Import for defaultTargetPlatform
-import 'package:provider/provider.h'; // Allowed package
+import 'package:provider/provider.dart';
+import 'dart:ui'; // Required for ImageFilter
 
 // Color Palette Definitions
 const Color baseBackground = Color(0xFF0A0A0A);
@@ -509,7 +510,6 @@ class ResumAIHomeScreen extends StatelessWidget {
   }
 }
 
-// MODIFIED: ResumeBuilderScreen to include TabController and TabBar for preview
 class ResumeBuilderScreen extends StatefulWidget {
   const ResumeBuilderScreen({super.key});
 
@@ -517,7 +517,7 @@ class ResumeBuilderScreen extends StatefulWidget {
   State<ResumeBuilderScreen> createState() => _ResumeBuilderScreenState();
 }
 
-class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerProviderStateMixin { // MODIFIED: Added TickerProviderStateMixin
+class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerProviderStateMixin {
   // Controllers for all text fields
   late TextEditingController _nameController;
   late TextEditingController _emailController;
@@ -538,14 +538,13 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
   late TextEditingController _educationDetailsController;
   late TextEditingController _skillsController;
 
-  late TabController _tabController; // NEW: TabController
+  late TabController _tabController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    // Initialize controllers with current data from ResumeData
     final ResumeData resumeData = context.read<ResumeData>();
 
     _nameController = TextEditingController(text: resumeData.name);
@@ -567,7 +566,6 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
     _educationDetailsController = TextEditingController(text: resumeData.educationDetails);
     _skillsController = TextEditingController(text: resumeData.skills);
 
-    // NEW: Initialize TabController
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -591,7 +589,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
     _educationEndDateController.dispose();
     _educationDetailsController.dispose();
     _skillsController.dispose();
-    _tabController.dispose(); // NEW: Dispose TabController
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -615,6 +613,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
     required void Function(String) onChanged,
+    TextInputAction textInputAction = TextInputAction.next, // Added textInputAction parameter
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -623,6 +622,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
         keyboardType: keyboardType,
         maxLines: maxLines,
         style: const TextStyle(color: textPrimary),
+        textInputAction: textInputAction, // Applied textInputAction
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
@@ -666,7 +666,6 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
           icon: const Icon(Icons.arrow_back, color: textSecondary),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        // MODIFIED: Added TabBar to AppBar bottom
         bottom: TabBar(
           controller: _tabController,
           tabs: const <Tab>[
@@ -678,11 +677,9 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
           indicatorColor: goldPrimary,
         ),
       ),
-      // MODIFIED: Body now uses TabBarView
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          // Existing Form (unchanged UI)
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(20),
@@ -698,6 +695,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       hintText: "John Doe",
                       onChanged: (String value) => resumeData.name = value,
                       validator: (String? value) => value == null || value.isEmpty ? "Name cannot be empty" : null,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _emailController,
@@ -710,6 +708,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                         if (!value.contains('@')) return "Enter a valid email";
                         return null;
                       },
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _phoneController,
@@ -717,6 +716,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       hintText: "+1 (555) 123-4567",
                       keyboardType: TextInputType.phone,
                       onChanged: (String value) => resumeData.phone = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _linkedinOrPortfolioController,
@@ -724,6 +724,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       hintText: "https://linkedin.com/in/johndoe",
                       keyboardType: TextInputType.url,
                       onChanged: (String value) => resumeData.linkedinOrPortfolio = value,
+                      textInputAction: TextInputAction.next,
                     ),
 
                     _buildSectionTitle("Summary/Objective"),
@@ -732,7 +733,9 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       labelText: "Summary",
                       hintText: "A highly motivated and results-oriented professional...",
                       maxLines: 5,
+                      keyboardType: TextInputType.multiline,
                       onChanged: (String value) => resumeData.summary = value,
+                      textInputAction: TextInputAction.newline,
                     ),
 
                     _buildSectionTitle("Experience (Latest)"),
@@ -741,18 +744,21 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       labelText: "Job Title",
                       hintText: "Senior Product Designer",
                       onChanged: (String value) => resumeData.jobTitle = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _companyController,
                       labelText: "Company",
                       hintText: "Tech Innovations Inc.",
                       onChanged: (String value) => resumeData.company = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _jobLocationController,
                       labelText: "Location",
                       hintText: "San Francisco, CA",
                       onChanged: (String value) => resumeData.jobLocation = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     Row(
                       children: <Widget>[
@@ -762,6 +768,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                             labelText: "Start Date",
                             hintText: "Jan 2020",
                             onChanged: (String value) => resumeData.jobStartDate = value,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -771,6 +778,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                             labelText: "End Date",
                             hintText: "Dec 2022 or Present",
                             onChanged: (String value) => resumeData.jobEndDate = value,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                       ],
@@ -780,7 +788,9 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       labelText: "Job Description (bullet points recommended)",
                       hintText: "• Led design sprints for new features\n• Increased user engagement by 15%",
                       maxLines: 8,
+                      keyboardType: TextInputType.multiline,
                       onChanged: (String value) => resumeData.jobDescription = value,
+                      textInputAction: TextInputAction.newline,
                     ),
 
                     _buildSectionTitle("Education (Latest)"),
@@ -789,18 +799,21 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       labelText: "Degree/Certification",
                       hintText: "Master of Science in HCI",
                       onChanged: (String value) => resumeData.degree = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _universityController,
                       labelText: "University/Institution",
                       hintText: "Stanford University",
                       onChanged: (String value) => resumeData.university = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     _buildTextFormField(
                       controller: _educationLocationController,
                       labelText: "Location",
                       hintText: "Stanford, CA",
                       onChanged: (String value) => resumeData.educationLocation = value,
+                      textInputAction: TextInputAction.next,
                     ),
                     Row(
                       children: <Widget>[
@@ -810,6 +823,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                             labelText: "Start Date",
                             hintText: "Sep 2018",
                             onChanged: (String value) => resumeData.educationStartDate = value,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -819,6 +833,7 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                             labelText: "End Date",
                             hintText: "Jun 2020",
                             onChanged: (String value) => resumeData.educationEndDate = value,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                       ],
@@ -828,23 +843,26 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                       labelText: "Additional Details (e.g., Thesis, GPA)",
                       hintText: "Thesis: 'Designing for Accessibility in VR'",
                       maxLines: 3,
+                      keyboardType: TextInputType.multiline,
                       onChanged: (String value) => resumeData.educationDetails = value,
+                      textInputAction: TextInputAction.newline,
                     ),
 
                     _buildSectionTitle("Skills"),
                     _buildTextFormField(
                       controller: _skillsController,
-                      labelText: "Skills (comma-separated)",
-                      hintText: "Figma, Sketch, User Research, Prototyping, HTML, CSS",
+                      labelText: "Skills (comma-separated or newline-separated)",
+                      hintText: "Figma, Sketch\nUser Research\nPrototyping, HTML, CSS",
                       maxLines: 4,
+                      keyboardType: TextInputType.multiline, // Allow multiline input
                       onChanged: (String value) => resumeData.skills = value,
+                      textInputAction: TextInputAction.newline, // Allow enter to create new line
                     ),
                     const SizedBox(height: 30),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState?.validate() ?? false) {
-                            // Form is valid, data is already updated via onChanged callbacks
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text("Resume data updated!", style: TextStyle(color: baseBackground)),
@@ -852,8 +870,16 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
                                 duration: const Duration(seconds: 2),
                               ),
                             );
-                            // Optionally, switch to the preview tab after saving
-                            _tabController.animateTo(1);
+                            _tabController.animateTo(1); // Switch to the preview tab after saving
+                          } else {
+                            // Show a snackbar if validation fails
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text("Please correct the errors in the form.", style: TextStyle(color: textPrimary)),
+                                backgroundColor: Colors.redAccent,
+                                duration: const Duration(seconds: 3),
+                              ),
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -871,7 +897,6 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
               ),
             ),
           ),
-          // NEW: Live Preview Card
           const ResumePreviewWidget(),
         ],
       ),
@@ -879,44 +904,98 @@ class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerPr
   }
 }
 
-// NEW: ResumePreviewWidget for the live preview tab
 class ResumePreviewWidget extends StatelessWidget {
   const ResumePreviewWidget({super.key});
 
   Widget _buildPreviewSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0, bottom: 6.0),
+      padding: const EdgeInsets.only(top: 24.0, bottom: 12.0), // Increased spacing
       child: Text(
         title.toUpperCase(),
         style: const TextStyle(
           color: goldPrimary,
           fontSize: 14,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
+          letterSpacing: 2.0, // Increased letter spacing
         ),
       ),
     );
   }
 
-  Widget _buildPreviewText(String text, {TextStyle? style}) {
+  Widget _buildPreviewText(String text, {TextStyle? style, EdgeInsetsGeometry padding = const EdgeInsets.symmetric(vertical: 4.0)}) {
     if (text.isEmpty) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1.0),
-      child: Text(text, style: style ?? const TextStyle(color: textPrimary, fontSize: 13)),
+      padding: padding,
+      child: Text(text, style: style ?? const TextStyle(color: textPrimary, fontSize: 14)),
     );
   }
 
-  Widget _buildBulletPoint(String text) {
+  Widget _buildGoldBulletPoint(String text) {
     if (text.isEmpty) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, top: 2.0),
+      padding: const EdgeInsets.only(left: 12.0, top: 4.0, bottom: 4.0), // Adjusted spacing
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text("• ", style: TextStyle(color: textPrimary, fontSize: 13)),
-          Expanded(child: Text(text, style: const TextStyle(color: textPrimary, fontSize: 13))),
+          const Icon(Icons.circle, color: goldPrimary, size: 6), // Small gold circle
+          const SizedBox(width: 8),
+          Expanded(child: Text(text, style: const TextStyle(color: textPrimary, fontSize: 13, height: 1.5))), // Added height for readability
         ],
       ),
+    );
+  }
+
+  Widget _buildGlassmorphicContentBlock({required Widget child, EdgeInsetsGeometry? padding}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12), // Rounded corners for content blocks
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Frosted glass blur
+        child: Container(
+          width: double.infinity,
+          padding: padding ?? const EdgeInsets.all(16), // Consistent padding
+          decoration: BoxDecoration(
+            color: cardColor.withOpacity(0.3), // Semi-transparent
+            borderRadius: BorderRadius.circular(12), // Redundant here if ClipRRect is used, but good for consistency
+            border: Border.all(color: borderColor.withOpacity(0.2), width: 1), // Subtle border
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  // Helper to build the personal information content block
+  Widget _buildPersonalInformationContent(ResumeData resumeData) {
+    final List<Widget> personalInfoWidgets = <Widget>[];
+
+    if (resumeData.name.isNotEmpty) {
+      personalInfoWidgets.add(_buildPreviewText(
+        resumeData.name,
+        style: const TextStyle(color: goldPrimary, fontSize: 36, fontWeight: FontWeight.bold),
+        padding: EdgeInsets.zero, // Padding handled by the outer GlassmorphicContentBlock
+      ));
+    }
+    if (resumeData.jobTitle.isNotEmpty) {
+      personalInfoWidgets.add(_buildPreviewText(
+        resumeData.jobTitle,
+        style: const TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.w600),
+        padding: const EdgeInsets.only(top: 6.0), // Small internal padding for visual separation
+      ));
+    }
+    final String contactInfo = <String>[resumeData.email, resumeData.phone, resumeData.linkedinOrPortfolio]
+        .where((String s) => s.isNotEmpty)
+        .join('  |  ');
+    if (contactInfo.isNotEmpty) {
+      personalInfoWidgets.add(_buildPreviewText(
+        contactInfo,
+        style: const TextStyle(color: textSecondary, fontSize: 14),
+        padding: const EdgeInsets.only(top: 12.0), // Small internal padding for visual separation
+      ));
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: personalInfoWidgets,
     );
   }
 
@@ -927,274 +1006,267 @@ class ResumePreviewWidget extends StatelessWidget {
     final List<String> jobDescriptionPoints = resumeData.jobDescription
         .split('\n')
         .where((String s) => s.trim().isNotEmpty)
+        .map<String>((String s) => s.trim().startsWith('•') ? s.trim().substring(1).trim() : s.trim())
         .toList();
+
     final List<String> skillsList = resumeData.skills
-        .split(',')
+        .split(RegExp(r'[,\n]'))
         .where((String s) => s.trim().isNotEmpty)
         .map<String>((String s) => s.trim())
         .toList();
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Personal Information (Name and contact - more compact)
-          if (resumeData.name.isNotEmpty)
-            _buildPreviewText(
-              resumeData.name,
-              style: const TextStyle(color: goldPrimary, fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          if (resumeData.jobTitle.isNotEmpty)
-            _buildPreviewText(
-              resumeData.jobTitle,
-              style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          const SizedBox(height: 8),
-          Text(
-            <String>[resumeData.email, resumeData.phone, resumeData.linkedinOrPortfolio]
-                .where((String s) => s.isNotEmpty)
-                .join(' | '),
-            style: const TextStyle(color: textSecondary, fontSize: 12),
-          ),
+    final bool hasPersonalInfo = resumeData.name.isNotEmpty ||
+        resumeData.jobTitle.isNotEmpty ||
+        resumeData.email.isNotEmpty ||
+        resumeData.phone.isNotEmpty ||
+        resumeData.linkedinOrPortfolio.isNotEmpty;
 
-          // Summary
-          if (resumeData.summary.isNotEmpty) ...<Widget>[
-            _buildPreviewSectionTitle("Summary"),
-            _buildPreviewText(resumeData.summary, style: const TextStyle(color: textPrimary, fontSize: 13, height: 1.4)),
-          ],
-
-          // Experience
-          if (resumeData.jobTitle.isNotEmpty || resumeData.company.isNotEmpty || resumeData.jobDescription.isNotEmpty) ...<Widget>[
-            _buildPreviewSectionTitle("Experience"),
-            if (resumeData.jobTitle.isNotEmpty)
-              _buildPreviewText(
-                resumeData.jobTitle,
-                style: const TextStyle(color: textPrimary, fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            if (resumeData.company.isNotEmpty || resumeData.jobLocation.isNotEmpty)
-              _buildPreviewText(
-                '${resumeData.company}${resumeData.company.isNotEmpty && resumeData.jobLocation.isNotEmpty ? ' - ' : ''}${resumeData.jobLocation}',
-                style: const TextStyle(color: textSecondary, fontSize: 12, fontStyle: FontStyle.italic),
-              ),
-            if (resumeData.jobStartDate.isNotEmpty || resumeData.jobEndDate.isNotEmpty)
-              _buildPreviewText(
-                '${resumeData.jobStartDate}${resumeData.jobStartDate.isNotEmpty && resumeData.jobEndDate.isNotEmpty ? ' - ' : ''}${resumeData.jobEndDate}',
-                style: const TextStyle(color: textSecondary, fontSize: 12),
-              ),
-            if (jobDescriptionPoints.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: jobDescriptionPoints.map<Widget>((String point) => _buildBulletPoint(point)).toList(),
-              ),
-          ],
-
-          // Education
-          if (resumeData.degree.isNotEmpty || resumeData.university.isNotEmpty || resumeData.educationDetails.isNotEmpty) ...<Widget>[
-            _buildPreviewSectionTitle("Education"),
-            if (resumeData.degree.isNotEmpty)
-              _buildPreviewText(
-                resumeData.degree,
-                style: const TextStyle(color: textPrimary, fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            if (resumeData.university.isNotEmpty || resumeData.educationLocation.isNotEmpty)
-              _buildPreviewText(
-                '${resumeData.university}${resumeData.university.isNotEmpty && resumeData.educationLocation.isNotEmpty ? ' - ' : ''}${resumeData.educationLocation}',
-                style: const TextStyle(color: textSecondary, fontSize: 12, fontStyle: FontStyle.italic),
-              ),
-            if (resumeData.educationStartDate.isNotEmpty || resumeData.educationEndDate.isNotEmpty)
-              _buildPreviewText(
-                '${resumeData.educationStartDate}${resumeData.educationStartDate.isNotEmpty && resumeData.educationEndDate.isNotEmpty ? ' - ' : ''}${resumeData.educationEndDate}',
-                style: const TextStyle(color: textSecondary, fontSize: 12),
-              ),
-            if (resumeData.educationDetails.isNotEmpty)
-              _buildPreviewText(
-                resumeData.educationDetails,
-                style: const TextStyle(color: textPrimary, fontSize: 13),
-              ),
-          ],
-
-          // Skills
-          if (skillsList.isNotEmpty) ...<Widget>[
-            _buildPreviewSectionTitle("Skills"),
-            Wrap(
-              spacing: 6.0,
-              runSpacing: 6.0,
-              children: skillsList.map<Widget>((String skill) {
-                return Chip(
-                  label: Text(skill, style: const TextStyle(color: baseBackground, fontSize: 12)),
-                  backgroundColor: goldPrimary.withOpacity(0.8),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                );
-              }).toList(),
-            ),
-          ],
-          const SizedBox(height: 20),
-        ],
-      ),
-    );
-  }
-}
-
-// ResumePreviewScreen is not directly used anymore, but kept for completeness
-// as the prompt asked not to remove existing code. The logic has been largely
-// moved and adapted into ResumePreviewWidget for the live preview.
-class ResumePreviewScreen extends StatelessWidget {
-  const ResumePreviewScreen({super.key});
-
-  Widget _buildPreviewSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
-      child: Text(
-        title.toUpperCase(),
-        style: const TextStyle(
-          color: goldPrimary,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.5,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPreviewText(String text, {TextStyle? style}) {
-    if (text.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Text(text, style: style ?? const TextStyle(color: textPrimary, fontSize: 14)),
-    );
-  }
-
-  Widget _buildInfoRow(IconData icon, String text) {
-    if (text.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: <Widget>[
-          Icon(icon, color: textSecondary, size: 16),
-          const SizedBox(width: 8),
-          Flexible(child: Text(text, style: const TextStyle(color: textSecondary, fontSize: 13))),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Watch for changes in ResumeData
-    final ResumeData resumeData = context.watch<ResumeData>();
-
-    return Scaffold(
-      backgroundColor: baseBackground,
-      appBar: AppBar(
-        title: const Text("Resume Preview", style: TextStyle(color: textPrimary)),
-        backgroundColor: surfaceColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: textSecondary),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Personal Information
-              if (resumeData.name.isNotEmpty)
-                _buildPreviewText(
-                  resumeData.name,
-                  style: const TextStyle(color: goldPrimary, fontSize: 28, fontWeight: FontWeight.bold),
+    return Stack( // Use a stack for background elements
+      children: <Widget>[
+        // --- Abstract Background Elements ---
+        Positioned(
+          top: -50,
+          left: -50,
+          child: Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: goldGlow.withOpacity(0.05), // Very subtle glow
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: goldGlow.withOpacity(0.08),
+                  blurRadius: 100,
+                  spreadRadius: 50,
                 ),
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: 16.0,
-                runSpacing: 4.0,
-                children: <Widget>[
-                  if (resumeData.email.isNotEmpty) _buildInfoRow(Icons.email_outlined, resumeData.email),
-                  if (resumeData.phone.isNotEmpty) _buildInfoRow(Icons.phone_outlined, resumeData.phone),
-                  if (resumeData.linkedinOrPortfolio.isNotEmpty) _buildInfoRow(Icons.link_outlined, resumeData.linkedinOrPortfolio),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: -70,
+          right: -70,
+          child: Container(
+            width: 250,
+            height: 250,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: goldGlow.withOpacity(0.05),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: goldGlow.withOpacity(0.08),
+                  blurRadius: 120,
+                  spreadRadius: 60,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.2,
+          right: MediaQuery.of(context).size.width * 0.1,
+          child: Transform.rotate(
+            angle: 0.2, // Small rotation
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: surfaceColor.withOpacity(0.2), // Subtle geometric shape
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: baseBackground.withOpacity(0.2),
+                    blurRadius: 20,
+                    spreadRadius: 5,
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
-
-              // Summary
-              if (resumeData.summary.isNotEmpty) ...<Widget>[
-                _buildPreviewSectionTitle("Summary"),
-                _buildPreviewText(resumeData.summary, style: const TextStyle(color: textPrimary, fontSize: 14, height: 1.5)),
-              ],
-
-              // Experience
-              if (resumeData.jobTitle.isNotEmpty || resumeData.company.isNotEmpty || resumeData.jobDescription.isNotEmpty) ...<Widget>[
-                _buildPreviewSectionTitle("Experience"),
-                if (resumeData.jobTitle.isNotEmpty)
-                  _buildPreviewText(
-                    resumeData.jobTitle,
-                    style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                if (resumeData.company.isNotEmpty || resumeData.jobLocation.isNotEmpty)
-                  _buildPreviewText(
-                    '${resumeData.company}${resumeData.company.isNotEmpty && resumeData.jobLocation.isNotEmpty ? ' | ' : ''}${resumeData.jobLocation}',
-                    style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
-                  ),
-                if (resumeData.jobStartDate.isNotEmpty || resumeData.jobEndDate.isNotEmpty)
-                  _buildPreviewText(
-                    '${resumeData.jobStartDate} - ${resumeData.jobEndDate}',
-                    style: const TextStyle(color: textSecondary, fontSize: 13),
-                  ),
-                if (resumeData.jobDescription.isNotEmpty)
-                  _buildPreviewText(
-                    resumeData.jobDescription,
-                    style: const TextStyle(color: textPrimary, fontSize: 14),
-                  ),
-              ],
-
-              // Education
-              if (resumeData.degree.isNotEmpty || resumeData.university.isNotEmpty || resumeData.educationDetails.isNotEmpty) ...<Widget>[
-                _buildPreviewSectionTitle("Education"),
-                if (resumeData.degree.isNotEmpty)
-                  _buildPreviewText(
-                    resumeData.degree,
-                    style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                if (resumeData.university.isNotEmpty || resumeData.educationLocation.isNotEmpty)
-                  _buildPreviewText(
-                    '${resumeData.university}${resumeData.university.isNotEmpty && resumeData.educationLocation.isNotEmpty ? ' | ' : ''}${resumeData.educationLocation}',
-                    style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
-                  ),
-                if (resumeData.educationStartDate.isNotEmpty || resumeData.educationEndDate.isNotEmpty)
-                  _buildPreviewText(
-                    '${resumeData.educationStartDate} - ${resumeData.educationEndDate}',
-                    style: const TextStyle(color: textSecondary, fontSize: 13),
-                  ),
-                if (resumeData.educationDetails.isNotEmpty)
-                  _buildPreviewText(
-                    resumeData.educationDetails,
-                    style: const TextStyle(color: textPrimary, fontSize: 14),
-                  ),
-              ],
-
-              // Skills
-              if (resumeData.skills.isNotEmpty) ...<Widget>[
-                _buildPreviewSectionTitle("Skills"),
-                Wrap(
-                  spacing: 8.0,
-                  runSpacing: 8.0,
-                  children: resumeData.skills.split(',').map<Widget>((String skill) {
-                    if (skill.trim().isEmpty) return const SizedBox.shrink();
-                    return Chip(
-                      label: Text(skill.trim(), style: const TextStyle(color: baseBackground)),
-                      backgroundColor: goldPrimary,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    );
-                  }).toList(),
-                ),
-              ],
-              const SizedBox(height: 40),
-            ],
+            ),
           ),
         ),
-      ),
+        // Radial Gradient - subtle background lighting
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment.topRight,
+                radius: 1.0,
+                colors: <Color>[
+                  goldGlow.withOpacity(0.03), // Very subtle
+                  baseBackground,
+                ],
+                stops: const <double>[0.0, 0.9],
+              ),
+            ),
+          ),
+        ),
+
+        // --- Resume Card (Glassmorphism effect) ---
+        SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0), // Overall vertical and horizontal padding
+          child: Center(
+            child: ClipRRect( // ClipRRect for the main card's rounded corners and blur
+              borderRadius: BorderRadius.circular(24), // Increased rounded corners
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0), // Main card blur
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  padding: const EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                    color: cardColor.withOpacity(0.4), // Semi-transparent card
+                    borderRadius: BorderRadius.circular(24), // Redundant here if ClipRRect is used, but good for consistency and standalone use.
+                    border: Border.all(color: borderColor.withOpacity(0.3), width: 1), // Subtle border
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: goldGlow.withOpacity(0.2), // Soft glow shadow
+                        blurRadius: 30,
+                        spreadRadius: 8,
+                        offset: const Offset(0, 10),
+                      ),
+                      BoxShadow( // Deeper shadow for elevation
+                        color: baseBackground.withOpacity(0.6),
+                        blurRadius: 20,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // --- Header Section (Personal Information) ---
+                      if (hasPersonalInfo)
+                        _buildGlassmorphicContentBlock(
+                          padding: const EdgeInsets.all(24), // Adjusted padding for this block
+                          child: _buildPersonalInformationContent(resumeData),
+                        ),
+                      if (hasPersonalInfo) ...<Widget>[
+                        const SizedBox(height: 24), // Spacing before divider
+                        const Divider(color: borderColor, height: 1, thickness: 0.5), // Thinner divider
+                        const SizedBox(height: 24), // Increased spacing after divider
+                      ],
+
+                      // --- Summary ---
+                      if (resumeData.summary.isNotEmpty) ...<Widget>[
+                        _buildPreviewSectionTitle("Summary"),
+                        _buildGlassmorphicContentBlock(
+                          padding: const EdgeInsets.all(16),
+                          child: _buildPreviewText(
+                            resumeData.summary,
+                            style: const TextStyle(color: textPrimary, fontSize: 14, height: 1.6),
+                            padding: EdgeInsets.zero, // Padding handled by block
+                          ),
+                        ),
+                        const SizedBox(height: 30), // Increased space after section
+                      ],
+
+                      // --- Experience ---
+                      if (resumeData.jobTitle.isNotEmpty || resumeData.jobDescription.isNotEmpty) ...<Widget>[
+                        _buildPreviewSectionTitle("Experience"),
+                        _buildGlassmorphicContentBlock(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              if (resumeData.jobTitle.isNotEmpty)
+                                _buildPreviewText(
+                                  resumeData.jobTitle,
+                                  style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                ),
+                              if (resumeData.company.isNotEmpty || resumeData.jobLocation.isNotEmpty)
+                                _buildPreviewText(
+                                  '${resumeData.company}${resumeData.company.isNotEmpty && resumeData.jobLocation.isNotEmpty ? ' - ' : ''}${resumeData.jobLocation}',
+                                  style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                ),
+                              if (resumeData.jobStartDate.isNotEmpty || resumeData.jobEndDate.isNotEmpty)
+                                _buildPreviewText(
+                                  '${resumeData.jobStartDate}${resumeData.jobStartDate.isNotEmpty && resumeData.jobEndDate.isNotEmpty ? ' - ' : ''}${resumeData.jobEndDate}',
+                                  style: const TextStyle(color: textSecondary, fontSize: 12),
+                                  padding: const EdgeInsets.only(bottom: 12.0), // Spacing before description
+                                ),
+                              if (jobDescriptionPoints.isNotEmpty)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: jobDescriptionPoints.map<Widget>((String point) => _buildGoldBulletPoint(point)).toList(),
+                                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30), // Increased space after section
+                      ],
+
+                      // --- Education ---
+                      if (resumeData.degree.isNotEmpty || resumeData.educationDetails.isNotEmpty) ...<Widget>[
+                        _buildPreviewSectionTitle("Education"),
+                        _buildGlassmorphicContentBlock(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              if (resumeData.degree.isNotEmpty)
+                                _buildPreviewText(
+                                  resumeData.degree,
+                                  style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                ),
+                              if (resumeData.university.isNotEmpty || resumeData.educationLocation.isNotEmpty)
+                                _buildPreviewText(
+                                  '${resumeData.university}${resumeData.university.isNotEmpty && resumeData.educationLocation.isNotEmpty ? ' - ' : ''}${resumeData.educationLocation}',
+                                  style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                ),
+                              if (resumeData.educationStartDate.isNotEmpty || resumeData.educationEndDate.isNotEmpty)
+                                _buildPreviewText(
+                                  '${resumeData.educationStartDate}${resumeData.educationStartDate.isNotEmpty && resumeData.educationEndDate.isNotEmpty ? ' - ' : ''}${resumeData.educationEndDate}',
+                                  style: const TextStyle(color: textSecondary, fontSize: 12),
+                                  padding: const EdgeInsets.only(bottom: 12.0), // Spacing before details
+                                ),
+                              if (resumeData.educationDetails.isNotEmpty)
+                                _buildPreviewText(
+                                  resumeData.educationDetails,
+                                  style: const TextStyle(color: textPrimary, fontSize: 14, height: 1.5),
+                                  padding: EdgeInsets.zero,
+                                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30), // Increased space after section
+                      ],
+
+                      // --- Skills ---
+                      if (skillsList.isNotEmpty) ...<Widget>[
+                        _buildPreviewSectionTitle("Skills"),
+                        _buildGlassmorphicContentBlock(
+                          padding: const EdgeInsets.all(16),
+                          child: Wrap(
+                            spacing: 12.0, // Increased spacing between chips
+                            runSpacing: 12.0, // Increased run spacing
+                            children: skillsList.map<Widget>((String skill) {
+                              return Chip(
+                                label: Text(skill, style: const TextStyle(color: goldLight, fontSize: 14, fontWeight: FontWeight.w500)), // Larger font, goldLight
+                                backgroundColor: Colors.transparent, // Transparent fill
+                                side: BorderSide(color: goldPrimary.withOpacity(0.5)), // GoldPrimary border
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8), // More padding
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), // Pill shape
+                                elevation: 2, // Slight elevation
+                                shadowColor: goldGlow.withOpacity(0.1), // Soft glow for chips
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        const SizedBox(height: 30), // Increased space after skills section
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

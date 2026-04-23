@@ -588,3 +588,182 @@ class ResumePreviewWidget extends StatelessWidget {
     );
   }
 }
+
+
+_---------_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_+_+_-_+_+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class ResumeTemplate1 extends StatelessWidget {
+  const ResumeTemplate1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final data = Provider.of<ResumeData>(context);
+
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // 🔥 HEADER
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Image (static for now)
+                Container(
+                  width: 80,
+                  height: 80,
+                  color: Colors.grey.shade300,
+                  child: const Icon(Icons.person, size: 40),
+                ),
+
+                const SizedBox(width: 20),
+
+                // Name + Role
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.name.isEmpty ? "Your Name" : data.name,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        data.jobTitle.isEmpty ? "Job Title" : data.jobTitle,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Contact
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("Phone: ${data.phone}"),
+                    Text("Email: ${data.email}"),
+                    Text("Link: ${data.linkedinOrPortfolio}"),
+                  ],
+                )
+              ],
+            ),
+
+            const Divider(height: 30),
+
+            // 🔹 SUMMARY
+            _sectionTitle("SUMMARY"),
+            Text(
+              data.summary.isEmpty
+                  ? "Write your summary..."
+                  : data.summary,
+            ),
+
+            const Divider(height: 30),
+
+            // 🔹 WORK EXPERIENCE
+            _sectionTitle("WORK EXPERIENCE"),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Left dates
+                SizedBox(
+                  width: 120,
+                  child: Text(
+                    "${data.jobStartDate} - ${data.jobEndDate}\n${data.jobLocation}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                // Right content
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.jobTitle.isEmpty
+                            ? "Job Title"
+                            : data.jobTitle,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(data.company),
+                      const SizedBox(height: 5),
+                      Text(data.jobDescription),
+                    ],
+                  ),
+                )
+              ],
+            ),
+
+            const Divider(height: 30),
+
+            // 🔹 EDUCATION
+            _sectionTitle("EDUCATION"),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Text(
+                    "${data.educationStartDate} - ${data.educationEndDate}\n${data.educationLocation}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.degree.isEmpty
+                            ? "Degree"
+                            : data.degree,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(data.university),
+                      Text(data.educationDetails),
+                    ],
+                  ),
+                )
+              ],
+            ),
+
+            const Divider(height: 30),
+
+            // 🔹 SKILLS
+            _sectionTitle("SKILLS"),
+            Text(data.skills.isEmpty ? "Add skills" : data.skills),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sectionTitle(String title) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      color: Colors.black,
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.white),
+      ),
+    );
+  }
+}

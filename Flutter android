@@ -369,151 +369,175 @@ class ResumePreviewWidget extends StatelessWidget {
         .toList();
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       child: Center(
-        child: Container(
-          width: 900,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 10,
-                color: Colors.black.withOpacity(0.1),
-              )
-            ],
-          ),
-          child: Row(
-            children: [
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 10,
+                  color: Colors.black.withOpacity(0.1),
+                )
+              ],
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 700;
 
-              /// 🔵 LEFT SIDEBAR
-              Container(
-                width: 260,
-                padding: const EdgeInsets.all(20),
-                color: goldPrimary,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    /// NAME
-                    Text(
-                      data.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    /// CONTACT
-                    _leftTitle("CONTACT"),
-                    _leftText(data.email),
-                    _leftText(data.phone),
-                    _leftText(data.linkedinOrPortfolio),
-
-                    const SizedBox(height: 20),
-
-                    /// SKILLS
-                    if (skills.isNotEmpty) ...[
-                      _leftTitle("SKILLS"),
-                      ...skills.map((s) => _leftText("• $s")),
-                    ],
-                  ],
-                ),
-              ),
-
-              /// ⚪ RIGHT CONTENT
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      /// JOB TITLE
-                      Text(
-                        data.jobTitle,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: textPrimary,
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      /// SUMMARY
-                      if (data.summary.isNotEmpty)
-                        _section(
-                          "PROFILE",
-                          Text(data.summary),
-                        ),
-
-                      /// EXPERIENCE
-                      if (data.jobTitle.isNotEmpty ||
-                          data.company.isNotEmpty)
-                        _section(
-                          "EXPERIENCE",
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data.jobTitle,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "${data.company} - ${data.jobLocation}",
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              Text(
-                                "${data.jobStartDate} - ${data.jobEndDate}",
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              const SizedBox(height: 6),
-                              ...points.map((p) => Text("• $p")),
-                            ],
+                return isMobile
+                    ? Column(
+                        children: [
+                          _buildLeftSidebar(data, skills, isMobile),
+                          _buildRightContent(data, points),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          _buildLeftSidebar(data, skills, isMobile),
+                          Expanded(
+                            child: _buildRightContent(data, points),
                           ),
-                        ),
-
-                      /// EDUCATION
-                      if (data.degree.isNotEmpty)
-                        _section(
-                          "EDUCATION",
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data.degree,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "${data.university} - ${data.educationLocation}",
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              Text(
-                                "${data.educationStartDate} - ${data.educationEndDate}",
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              if (data.educationDetails.isNotEmpty)
-                                Text(data.educationDetails),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                        ],
+                      );
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  /// LEFT SIDE TITLE
+  /// 🔵 LEFT SIDEBAR
+  Widget _buildLeftSidebar(
+      ResumeData data, List skills, bool isMobile) {
+    return Container(
+      width: isMobile ? double.infinity : 260,
+      padding: const EdgeInsets.all(20),
+      color: goldPrimary,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            data.name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          _leftTitle("CONTACT"),
+          _leftText(data.email),
+          _leftText(data.phone),
+          _leftText(data.linkedinOrPortfolio),
+
+          const SizedBox(height: 20),
+
+          if (skills.isNotEmpty) ...[
+            _leftTitle("SKILLS"),
+            ...skills.map((s) => _leftText("• $s")),
+          ],
+        ],
+      ),
+    );
+  }
+
+  /// ⚪ RIGHT CONTENT
+  Widget _buildRightContent(ResumeData data, List points) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// JOB TITLE
+          Text(
+            data.jobTitle,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: textPrimary,
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          /// PROFILE
+          if (data.summary.isNotEmpty)
+            _section("PROFILE", Text(data.summary)),
+
+          /// EXPERIENCE
+          if (data.jobTitle.isNotEmpty || data.company.isNotEmpty)
+            _section(
+              "EXPERIENCE",
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.jobTitle,
+                    style:
+                        const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${data.company} - ${data.jobLocation}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  Text(
+                    "${data.jobStartDate} - ${data.jobEndDate}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 6),
+
+                  /// 🔥 FIX: prevent vertical text breaking
+                  ...points.map(
+                    (p) => Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        "• $p",
+                        softWrap: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          /// EDUCATION
+          if (data.degree.isNotEmpty)
+            _section(
+              "EDUCATION",
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.degree,
+                    style:
+                        const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${data.university} - ${data.educationLocation}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  Text(
+                    "${data.educationStartDate} - ${data.educationEndDate}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  if (data.educationDetails.isNotEmpty)
+                    Text(data.educationDetails),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// LEFT TITLE
   Widget _leftTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(top: 14, bottom: 6),
@@ -529,19 +553,20 @@ class ResumePreviewWidget extends StatelessWidget {
     );
   }
 
-  /// LEFT SIDE TEXT
+  /// LEFT TEXT
   Widget _leftText(String text) {
     if (text.isEmpty) return const SizedBox();
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white70, fontSize: 12),
+        style:
+            const TextStyle(color: Colors.white70, fontSize: 12),
       ),
     );
   }
 
-  /// RIGHT SECTION
+  /// SECTION
   Widget _section(String title, Widget child) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),

@@ -1,1271 +1,346 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart'; // Import for defaultTargetPlatform
-import 'package:provider/provider.dart';
-import 'dart:ui'; // Required for ImageFilter
 
-// Color Palette Definitions
-const Color baseBackground = Color(0xFF0A0A0A);
-const Color surfaceColor = Color(0xFF141414);
-const Color cardColor = Color(0xFF161616);
-const Color borderColor = Color(0xFF2C2C2C);
-const Color goldPrimary = Color(0xFFC8A96A);
-const Color goldSecondary = Color(0xFF9A7B4F);
-const Color goldDark = Color(0xFF6E5433);
-const Color goldLight = Color(0xFFE6C78E);
-const Color goldGlow = Color(0x66C8A96A);
-const Color textPrimary = Color(0xFFF5F5F5);
-const Color textSecondary = Color(0xFF9E9E9E);
-
-// --- DATA_MODEL ---
-class ResumeData extends ChangeNotifier {
-  String _name;
-  String _email;
-  String _phone;
-  String _linkedinOrPortfolio;
-  String _summary;
-  String _jobTitle;
-  String _company;
-  String _jobLocation;
-  String _jobStartDate;
-  String _jobEndDate;
-  String _jobDescription;
-  String _degree;
-  String _university;
-  String _educationLocation;
-  String _educationStartDate;
-  String _educationEndDate;
-  String _educationDetails;
-  String _skills;
-
-  ResumeData()
-      : _name = '',
-        _email = '',
-        _phone = '',
-        _linkedinOrPortfolio = '',
-        _summary = '',
-        _jobTitle = '',
-        _company = '',
-        _jobLocation = '',
-        _jobStartDate = '',
-        _jobEndDate = '',
-        _jobDescription = '',
-        _degree = '',
-        _university = '',
-        _educationLocation = '',
-        _educationStartDate = '',
-        _educationEndDate = '',
-        _educationDetails = '',
-        _skills = '';
-
-  String get name => _name;
-  set name(String value) {
-    if (_name != value) {
-      _name = value;
-      notifyListeners();
-    }
-  }
-
-  String get email => _email;
-  set email(String value) {
-    if (_email != value) {
-      _email = value;
-      notifyListeners();
-    }
-  }
-
-  String get phone => _phone;
-  set phone(String value) {
-    if (_phone != value) {
-      _phone = value;
-      notifyListeners();
-    }
-  }
-
-  String get linkedinOrPortfolio => _linkedinOrPortfolio;
-  set linkedinOrPortfolio(String value) {
-    if (_linkedinOrPortfolio != value) {
-      _linkedinOrPortfolio = value;
-      notifyListeners();
-    }
-  }
-
-  String get summary => _summary;
-  set summary(String value) {
-    if (_summary != value) {
-      _summary = value;
-      notifyListeners();
-    }
-  }
-
-  String get jobTitle => _jobTitle;
-  set jobTitle(String value) {
-    if (_jobTitle != value) {
-      _jobTitle = value;
-      notifyListeners();
-    }
-  }
-
-  String get company => _company;
-  set company(String value) {
-    if (_company != value) {
-      _company = value;
-      notifyListeners();
-    }
-  }
-
-  String get jobLocation => _jobLocation;
-  set jobLocation(String value) {
-    if (_jobLocation != value) {
-      _jobLocation = value;
-      notifyListeners();
-    }
-  }
-
-  String get jobStartDate => _jobStartDate;
-  set jobStartDate(String value) {
-    if (_jobStartDate != value) {
-      _jobStartDate = value;
-      notifyListeners();
-    }
-  }
-
-  String get jobEndDate => _jobEndDate;
-  set jobEndDate(String value) {
-    if (_jobEndDate != value) {
-      _jobEndDate = value;
-      notifyListeners();
-    }
-  }
-
-  String get jobDescription => _jobDescription;
-  set jobDescription(String value) {
-    if (_jobDescription != value) {
-      _jobDescription = value;
-      notifyListeners();
-    }
-  }
-
-  String get degree => _degree;
-  set degree(String value) {
-    if (_degree != value) {
-      _degree = value;
-      notifyListeners();
-    }
-  }
-
-  String get university => _university;
-  set university(String value) {
-    if (_university != value) {
-      _university = value;
-      notifyListeners();
-    }
-  }
-
-  String get educationLocation => _educationLocation;
-  set educationLocation(String value) {
-    if (_educationLocation != value) {
-      _educationLocation = value;
-      notifyListeners();
-    }
-  }
-
-  String get educationStartDate => _educationStartDate;
-  set educationStartDate(String value) {
-    if (_educationStartDate != value) {
-      _educationStartDate = value;
-      notifyListeners();
-    }
-  }
-
-  String get educationEndDate => _educationEndDate;
-  set educationEndDate(String value) {
-    if (_educationEndDate != value) {
-      _educationEndDate = value;
-      notifyListeners();
-    }
-  }
-
-  String get educationDetails => _educationDetails;
-  set educationDetails(String value) {
-    if (_educationDetails != value) {
-      _educationDetails = value;
-      notifyListeners();
-    }
-  }
-
-  String get skills => _skills;
-  set skills(String value) {
-    if (_skills != value) {
-      _skills = value;
-      notifyListeners();
-    }
-  }
+void main() {
+  runApp(const MyApp());
 }
 
-void main() => runApp(
-      ChangeNotifierProvider<ResumeData>(
-        create: (BuildContext context) => ResumeData(),
-        builder: (BuildContext context, Widget? child) => const MaterialApp(
-          home: ResumAIHomeScreen(),
-          debugShowCheckedModeBanner: false,
-        ),
-      ),
-    );
-
-class ResumAIHomeScreen extends StatelessWidget {
-  const ResumAIHomeScreen({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: const ResumeTemplateScreen(),
+    );
+  }
+}
+
+class ResumeTemplateScreen extends StatefulWidget {
+  const ResumeTemplateScreen({super.key});
+
+  @override
+  State<ResumeTemplateScreen> createState() =>
+      _ResumeTemplateScreenState();
+}
+
+class _ResumeTemplateScreenState extends State<ResumeTemplateScreen> {
+  String selectedCategory = "All Designs";
+  int selectedNavIndex = 1;
+  int? selectedTemplateIndex;
+
+  final List<String> categories = [
+    "All Designs",
+    "Modern",
+    "Professional",
+    "Creative",
+    "Academic"
+  ];
+
+  final List<Map<String, dynamic>> templates = [
+    {
+      "name": "Executive Edge",
+      "category": "Professional",
+      "image": "https://picsum.photos/200/300?1",
+      "premium": true,
+      "tag": "Used by 12k+"
+    },
+    {
+      "name": "Berlin Minimal",
+      "category": "Modern",
+      "image": "https://picsum.photos/200/300?2",
+      "premium": false,
+      "tag": "Trending"
+    },
+    {
+      "name": "Creative Canvas",
+      "category": "Creative",
+      "image": "https://picsum.photos/200/300?3",
+      "premium": true,
+      "tag": "Used by 5k+"
+    },
+    {
+      "name": "Scholar Elite",
+      "category": "Academic",
+      "image": "https://picsum.photos/200/300?4",
+      "premium": false,
+      "tag": "Classic"
+    },
+    {
+      "name": "Nova Dark",
+      "category": "Modern",
+      "image": "https://picsum.photos/200/300?5",
+      "premium": true,
+      "tag": "Used by 8k+"
+    },
+    {
+      "name": "Classic Corporate",
+      "category": "Professional",
+      "image": "https://picsum.photos/200/300?6",
+      "premium": false,
+      "tag": "Top Rated"
+    },
+  ];
+
+  List<Map<String, dynamic>> get filteredTemplates {
+    if (selectedCategory == "All Designs") return templates;
+    return templates
+        .where((t) => t["category"] == selectedCategory)
+        .toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filtered = filteredTemplates;
+
     return Scaffold(
-      backgroundColor: baseBackground,
-      bottomNavigationBar: _buildBottomNav(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildHeader(),
-              const SizedBox(height: 25),
-              _buildResumeStrengthCard(),
-              const SizedBox(height: 20),
-              _buildCreateNewCard(context),
-              const SizedBox(height: 30),
-              _buildSectionHeader("My Resumes", true),
-              const SizedBox(height: 15),
-              _buildResumeList(),
-              const SizedBox(height: 30),
-              _buildSectionHeader("Recent Activity", false),
-              const SizedBox(height: 15),
-              _buildActivityCard(),
-              const SizedBox(height: 20),
-              _buildProTip(),
-              const SizedBox(height: 40),
-            ],
-          ),
+      backgroundColor: const Color(0xFF0D1117),
+
+      // ✅ AppBar
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Pick Template", style: TextStyle(fontSize: 18)),
+            Text("Step 1 of 3: Layout",
+                style: TextStyle(fontSize: 12, color: Colors.grey)),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Search clicked")));
+            },
+          )
+        ],
+      ),
+
+      // ✅ Body
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+
+            // AI Card
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: const LinearGradient(
+                    colors: [Colors.blue, Colors.blueAccent]),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.auto_awesome, color: Colors.white),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      "Modern layouts can increase interview chances by 35% for Tech roles.",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Filter Chips
+            SizedBox(
+              height: 40,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (_, i) {
+                  final cat = categories[i];
+                  final selected = cat == selectedCategory;
+
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() => selectedCategory = cat);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: selected
+                            ? Colors.blue
+                            : Colors.grey.shade800,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(child: Text(cat)),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Grid
+            Expanded(
+              child: GridView.builder(
+                itemCount: filtered.length,
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.7,
+                ),
+                itemBuilder: (_, i) {
+                  final item = filtered[i];
+                  final isSelected =
+                      templates.indexOf(item) == selectedTemplateIndex;
+
+                  return _TemplateCard(
+                    data: item,
+                    isSelected: isSelected,
+                    onTap: () {
+                      setState(() {
+                        selectedTemplateIndex =
+                            templates.indexOf(item);
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+
+            const Text(
+              "All templates are ATS-friendly and printable",
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
+          ],
         ),
       ),
-    );
-  }
 
-  Widget _buildHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            const Icon(Icons.bolt, color: goldPrimary, size: 30),
-            const SizedBox(width: 8),
-            Text("ResumAI", style: TextStyle(color: goldPrimary, fontSize: 22, fontWeight: FontWeight.bold)),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: cardColor, shape: BoxShape.circle, border: Border.all(color: borderColor)),
-              child: const Icon(Icons.settings_outlined, color: textSecondary, size: 20),
-            ),
-            const SizedBox(width: 12),
-            const CircleAvatar(
-              radius: 18,
-              backgroundImage: NetworkImage('https://www.gstatic.com/flutter-onestack-prototype/genui/example_1.jpg'),
-            ),
-          ],
-        )
-      ],
-    );
-  }
+      // ✅ FAB
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Create new template")));
+        },
+        child: const Icon(Icons.add),
+      ),
 
-  Widget _buildResumeStrengthCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(20), border: Border.all(color: borderColor)),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(value: 0.7, strokeWidth: 6, backgroundColor: baseBackground, color: goldPrimary),
-              const Text("70%", style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 12)),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Text("RESUME STRENGTH", style: TextStyle(color: textSecondary, fontSize: 10, letterSpacing: 1.2)),
-                const Text("Almost there, Alex!", style: TextStyle(color: textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
-                Text("Add your skills to reach 90%", style: TextStyle(color: textSecondary, fontSize: 13)),
-              ],
-            ),
-          ),
-          const Icon(Icons.chevron_right, color: textSecondary),
+      // ✅ Bottom Navigation
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedNavIndex,
+        onTap: (i) {
+          setState(() => selectedNavIndex = i);
+          final names = ["Home", "Designs", "My Files", "Profile"];
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("${names[i]} clicked")));
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: "Designs"),
+          BottomNavigationBarItem(icon: Icon(Icons.folder), label: "My Files"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );
   }
+}
 
-  Widget _buildCreateNewCard(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0D1515), // Deep dark teal/black mix
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: goldPrimary.withOpacity(0.1)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: goldPrimary, borderRadius: BorderRadius.circular(12)),
-            child: const Icon(Icons.add, color: baseBackground),
+// ✅ Template Card Widget
+class _TemplateCard extends StatelessWidget {
+  final Map<String, dynamic> data;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _TemplateCard({
+    required this.data,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade900,
+            borderRadius: BorderRadius.circular(16),
           ),
-          const SizedBox(height: 20),
-          const Text("Create New Resume", style: TextStyle(color: textPrimary, fontSize: 22, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          const Text("Our AI analyzes 1,000+ job\ndescriptions to build your perfect CV\nin seconds.",
-            style: TextStyle(color: textSecondary, fontSize: 14, height: 1.4)),
-          const SizedBox(height: 25),
-          Row(
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const ResumeBuilderScreen(),
-                  ));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: goldPrimary,
-                  foregroundColor: baseBackground,
-                  shape: defaultTargetPlatform == TargetPlatform.android ? const StadiumBorder() : RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
+                child: Image.network(
+                  data["image"],
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                child: const Text("Start Building", style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              const SizedBox(width: 15),
-              SizedBox(
-                width: 80,
-                height: 24,
-                child: Stack(
-                  children: List<Widget>.generate(3, (int i) => Positioned(left: i * 15, child: CircleAvatar(radius: 12, backgroundColor: borderColor, child: const Icon(Icons.person, size: 12, color: goldSecondary)))),
+
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(data["name"],
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold)),
+                    Text(
+                      "${data["category"]} • ${data["tag"]}",
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 8),
+
+                    ElevatedButton(
+                      onPressed: onTap,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isSelected ? Colors.blue : Colors.grey,
+                      ),
+                      child: Text(
+                          isSelected ? "Selected" : "Choose Template"),
+                    )
+                  ],
                 ),
               )
             ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title, bool showViewAll) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(title, style: const TextStyle(color: textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
-        if (showViewAll) Text("View All", style: TextStyle(color: goldPrimary, fontSize: 14)),
-      ],
-    );
-  }
-
-  Widget _buildResumeList() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
-          _buildResumeTile("Product Designer 2024", "Edited 2h ago", "70% COMPLETE"),
-          const SizedBox(width: 15),
-          _buildResumeTile("Senior UX Strat", "Edited yesterday", "READY"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildResumeTile(String title, String time, String status) {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(16), border: Border.all(color: borderColor)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: surfaceColor,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[Colors.white10, Colors.transparent])
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(status, style: const TextStyle(color: textSecondary, fontSize: 10, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 4),
-                Text(title, style: const TextStyle(color: textPrimary, fontSize: 14, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
-                const SizedBox(height: 4),
-                Row(
-                  children: <Widget>[
-                    const Icon(Icons.access_time, color: textSecondary, size: 12),
-                    const SizedBox(width: 4),
-                    Text(time, style: const TextStyle(color: textSecondary, fontSize: 11)),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActivityCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(20), border: Border.all(color: borderColor)),
-      child: Column(
-        children: <Widget>[
-          _activityItem(Icons.description_outlined, "Updated Skills section", "2 hours ago"),
-          const Divider(color: borderColor, height: 24),
-          _activityItem(Icons.auto_awesome, "AI optimized your summary", "5 hours ago", iconColor: goldPrimary),
-          const Divider(color: borderColor, height: 24),
-          _activityItem(Icons.emoji_events_outlined, "Added 'Google Certification'", "Yesterday"),
-        ],
-      ),
-    );
-  }
-
-  Widget _activityItem(IconData icon, String title, String time, {Color? iconColor}) {
-    return Row(
-      children: <Widget>[
-        Icon(icon, color: iconColor ?? textSecondary, size: 20),
-        const SizedBox(width: 15),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(title, style: const TextStyle(color: textPrimary, fontSize: 14, fontWeight: FontWeight.w500)),
-            Text(time, style: const TextStyle(color: textSecondary, fontSize: 12)),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget _buildProTip() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: goldDark.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: goldDark.withOpacity(0.3)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: goldPrimary.withOpacity(0.2), shape: BoxShape.circle),
-            child: const Icon(Icons.lightbulb_outline, color: goldLight, size: 20),
-          ),
-          const SizedBox(width: 15),
-          const Expanded(
-            child: Text.rich(
-              TextSpan(
-                style: TextStyle(color: textSecondary, fontSize: 13),
-                children: <TextSpan>[
-                  TextSpan(text: "PRO TIP\n", style: TextStyle(color: goldLight, fontWeight: FontWeight.bold, fontSize: 11)),
-                  TextSpan(text: "Resumes with "),
-                  TextSpan(text: "quantified achievements", style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold)),
-                  TextSpan(text: " get 40% more callbacks."),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: const BoxDecoration(border: Border(top: BorderSide(color: borderColor, width: 0.5))),
-      child: BottomNavigationBar(
-        backgroundColor: baseBackground,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: goldPrimary,
-        unselectedItemColor: textSecondary,
-        currentIndex: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_rounded), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.file_copy_outlined), label: "Templates"),
-          BottomNavigationBarItem(icon: Icon(Icons.auto_awesome_outlined), label: "AI Help"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile"),
-        ],
-      ),
-    );
-  }
-}
-
-class ResumeBuilderScreen extends StatefulWidget {
-  const ResumeBuilderScreen({super.key});
-
-  @override
-  State<ResumeBuilderScreen> createState() => _ResumeBuilderScreenState();
-}
-
-class _ResumeBuilderScreenState extends State<ResumeBuilderScreen> with TickerProviderStateMixin {
-  // Controllers for all text fields
-  late TextEditingController _nameController;
-  late TextEditingController _emailController;
-  late TextEditingController _phoneController;
-  late TextEditingController _linkedinOrPortfolioController;
-  late TextEditingController _summaryController;
-  late TextEditingController _jobTitleController;
-  late TextEditingController _companyController;
-  late TextEditingController _jobLocationController;
-  late TextEditingController _jobStartDateController;
-  late TextEditingController _jobEndDateController;
-  late TextEditingController _jobDescriptionController;
-  late TextEditingController _degreeController;
-  late TextEditingController _universityController;
-  late TextEditingController _educationLocationController;
-  late TextEditingController _educationStartDateController;
-  late TextEditingController _educationEndDateController;
-  late TextEditingController _educationDetailsController;
-  late TextEditingController _skillsController;
-
-  late TabController _tabController;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    final ResumeData resumeData = context.read<ResumeData>();
-
-    _nameController = TextEditingController(text: resumeData.name);
-    _emailController = TextEditingController(text: resumeData.email);
-    _phoneController = TextEditingController(text: resumeData.phone);
-    _linkedinOrPortfolioController = TextEditingController(text: resumeData.linkedinOrPortfolio);
-    _summaryController = TextEditingController(text: resumeData.summary);
-    _jobTitleController = TextEditingController(text: resumeData.jobTitle);
-    _companyController = TextEditingController(text: resumeData.company);
-    _jobLocationController = TextEditingController(text: resumeData.jobLocation);
-    _jobStartDateController = TextEditingController(text: resumeData.jobStartDate);
-    _jobEndDateController = TextEditingController(text: resumeData.jobEndDate);
-    _jobDescriptionController = TextEditingController(text: resumeData.jobDescription);
-    _degreeController = TextEditingController(text: resumeData.degree);
-    _universityController = TextEditingController(text: resumeData.university);
-    _educationLocationController = TextEditingController(text: resumeData.educationLocation);
-    _educationStartDateController = TextEditingController(text: resumeData.educationStartDate);
-    _educationEndDateController = TextEditingController(text: resumeData.educationEndDate);
-    _educationDetailsController = TextEditingController(text: resumeData.educationDetails);
-    _skillsController = TextEditingController(text: resumeData.skills);
-
-    _tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _linkedinOrPortfolioController.dispose();
-    _summaryController.dispose();
-    _jobTitleController.dispose();
-    _companyController.dispose();
-    _jobLocationController.dispose();
-    _jobStartDateController.dispose();
-    _jobEndDateController.dispose();
-    _jobDescriptionController.dispose();
-    _degreeController.dispose();
-    _universityController.dispose();
-    _educationLocationController.dispose();
-    _educationStartDateController.dispose();
-    _educationEndDateController.dispose();
-    _educationDetailsController.dispose();
-    _skillsController.dispose();
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  // Helper widget for form section titles
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Text(
-        title,
-        style: const TextStyle(color: goldPrimary, fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  // Helper for text form fields
-  Widget _buildTextFormField({
-    required TextEditingController controller,
-    required String labelText,
-    String? hintText,
-    int maxLines = 1,
-    TextInputType keyboardType = TextInputType.text,
-    String? Function(String?)? validator,
-    required void Function(String) onChanged,
-    TextInputAction textInputAction = TextInputAction.next, // Added textInputAction parameter
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        maxLines: maxLines,
-        style: const TextStyle(color: textPrimary),
-        textInputAction: textInputAction, // Applied textInputAction
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          labelStyle: const TextStyle(color: textSecondary),
-          hintStyle: TextStyle(color: textSecondary.withOpacity(0.6)),
-          filled: true,
-          fillColor: cardColor,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: borderColor, width: 1),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: goldPrimary, width: 1.5),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.red, width: 1),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.red, width: 1.5),
           ),
         ),
-        validator: validator,
-        onChanged: onChanged,
-      ),
-    );
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    final ResumeData resumeData = context.read<ResumeData>();
-
-    return Scaffold(
-      backgroundColor: baseBackground,
-      appBar: AppBar(
-        title: const Text("Resume Builder", style: TextStyle(color: textPrimary)),
-        backgroundColor: surfaceColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: textSecondary),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const <Tab>[
-            Tab(text: "Edit Form", icon: Icon(Icons.edit_note_outlined)),
-            Tab(text: "Live Preview", icon: Icon(Icons.visibility_outlined)),
-          ],
-          labelColor: goldPrimary,
-          unselectedLabelColor: textSecondary,
-          indicatorColor: goldPrimary,
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildSectionTitle("Personal Information"),
-                    _buildTextFormField(
-                      controller: _nameController,
-                      labelText: "Full Name",
-                      hintText: "John Doe",
-                      onChanged: (String value) => resumeData.name = value,
-                      validator: (String? value) => value == null || value.isEmpty ? "Name cannot be empty" : null,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _emailController,
-                      labelText: "Email",
-                      hintText: "john.doe@example.com",
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (String value) => resumeData.email = value,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) return "Email cannot be empty";
-                        if (!value.contains('@')) return "Enter a valid email";
-                        return null;
-                      },
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _phoneController,
-                      labelText: "Phone Number",
-                      hintText: "+1 (555) 123-4567",
-                      keyboardType: TextInputType.phone,
-                      onChanged: (String value) => resumeData.phone = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _linkedinOrPortfolioController,
-                      labelText: "LinkedIn or Portfolio URL",
-                      hintText: "https://linkedin.com/in/johndoe",
-                      keyboardType: TextInputType.url,
-                      onChanged: (String value) => resumeData.linkedinOrPortfolio = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-
-                    _buildSectionTitle("Summary/Objective"),
-                    _buildTextFormField(
-                      controller: _summaryController,
-                      labelText: "Summary",
-                      hintText: "A highly motivated and results-oriented professional...",
-                      maxLines: 5,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (String value) => resumeData.summary = value,
-                      textInputAction: TextInputAction.newline,
-                    ),
-
-                    _buildSectionTitle("Experience (Latest)"),
-                    _buildTextFormField(
-                      controller: _jobTitleController,
-                      labelText: "Job Title",
-                      hintText: "Senior Product Designer",
-                      onChanged: (String value) => resumeData.jobTitle = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _companyController,
-                      labelText: "Company",
-                      hintText: "Tech Innovations Inc.",
-                      onChanged: (String value) => resumeData.company = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _jobLocationController,
-                      labelText: "Location",
-                      hintText: "San Francisco, CA",
-                      onChanged: (String value) => resumeData.jobLocation = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: _buildTextFormField(
-                            controller: _jobStartDateController,
-                            labelText: "Start Date",
-                            hintText: "Jan 2020",
-                            onChanged: (String value) => resumeData.jobStartDate = value,
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: _buildTextFormField(
-                            controller: _jobEndDateController,
-                            labelText: "End Date",
-                            hintText: "Dec 2022 or Present",
-                            onChanged: (String value) => resumeData.jobEndDate = value,
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ],
-                    ),
-                    _buildTextFormField(
-                      controller: _jobDescriptionController,
-                      labelText: "Job Description (bullet points recommended)",
-                      hintText: "• Led design sprints for new features\n• Increased user engagement by 15%",
-                      maxLines: 8,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (String value) => resumeData.jobDescription = value,
-                      textInputAction: TextInputAction.newline,
-                    ),
-
-                    _buildSectionTitle("Education (Latest)"),
-                    _buildTextFormField(
-                      controller: _degreeController,
-                      labelText: "Degree/Certification",
-                      hintText: "Master of Science in HCI",
-                      onChanged: (String value) => resumeData.degree = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _universityController,
-                      labelText: "University/Institution",
-                      hintText: "Stanford University",
-                      onChanged: (String value) => resumeData.university = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    _buildTextFormField(
-                      controller: _educationLocationController,
-                      labelText: "Location",
-                      hintText: "Stanford, CA",
-                      onChanged: (String value) => resumeData.educationLocation = value,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: _buildTextFormField(
-                            controller: _educationStartDateController,
-                            labelText: "Start Date",
-                            hintText: "Sep 2018",
-                            onChanged: (String value) => resumeData.educationStartDate = value,
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: _buildTextFormField(
-                            controller: _educationEndDateController,
-                            labelText: "End Date",
-                            hintText: "Jun 2020",
-                            onChanged: (String value) => resumeData.educationEndDate = value,
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ],
-                    ),
-                    _buildTextFormField(
-                      controller: _educationDetailsController,
-                      labelText: "Additional Details (e.g., Thesis, GPA)",
-                      hintText: "Thesis: 'Designing for Accessibility in VR'",
-                      maxLines: 3,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (String value) => resumeData.educationDetails = value,
-                      textInputAction: TextInputAction.newline,
-                    ),
-
-                    _buildSectionTitle("Skills"),
-                    _buildTextFormField(
-                      controller: _skillsController,
-                      labelText: "Skills (comma-separated or newline-separated)",
-                      hintText: "Figma, Sketch\nUser Research\nPrototyping, HTML, CSS",
-                      maxLines: 4,
-                      keyboardType: TextInputType.multiline, // Allow multiline input
-                      onChanged: (String value) => resumeData.skills = value,
-                      textInputAction: TextInputAction.newline, // Allow enter to create new line
-                    ),
-                    const SizedBox(height: 30),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text("Resume data updated!", style: TextStyle(color: baseBackground)),
-                                backgroundColor: goldPrimary,
-                                duration: const Duration(seconds: 2),
-                              ),
-                            );
-                            _tabController.animateTo(1); // Switch to the preview tab after saving
-                          } else {
-                            // Show a snackbar if validation fails
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text("Please correct the errors in the form.", style: TextStyle(color: textPrimary)),
-                                backgroundColor: Colors.redAccent,
-                                duration: const Duration(seconds: 3),
-                              ),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: goldPrimary,
-                          foregroundColor: baseBackground,
-                          shape: defaultTargetPlatform == TargetPlatform.android ? const StadiumBorder() : RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                        ),
-                        child: const Text("Save Resume", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const ResumePreviewWidget(),
-        ],
-      ),
-    );
-  }
-}
-
-class ResumePreviewWidget extends StatelessWidget {
-  const ResumePreviewWidget({super.key});
-
-  Widget _buildPreviewSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 24.0, bottom: 12.0), // Increased spacing
-      child: Text(
-        title.toUpperCase(),
-        style: const TextStyle(
-          color: goldPrimary,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2.0, // Increased letter spacing
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPreviewText(String text, {TextStyle? style, EdgeInsetsGeometry padding = const EdgeInsets.symmetric(vertical: 4.0)}) {
-    if (text.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: padding,
-      child: Text(text, style: style ?? const TextStyle(color: textPrimary, fontSize: 14)),
-    );
-  }
-
-  Widget _buildGoldBulletPoint(String text) {
-    if (text.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.only(left: 12.0, top: 4.0, bottom: 4.0), // Adjusted spacing
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Icon(Icons.circle, color: goldPrimary, size: 6), // Small gold circle
-          const SizedBox(width: 8),
-          Expanded(child: Text(text, style: const TextStyle(color: textPrimary, fontSize: 13, height: 1.5))), // Added height for readability
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGlassmorphicContentBlock({required Widget child, EdgeInsetsGeometry? padding}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12), // Rounded corners for content blocks
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Frosted glass blur
-        child: Container(
-          width: double.infinity,
-          padding: padding ?? const EdgeInsets.all(16), // Consistent padding
-          decoration: BoxDecoration(
-            color: cardColor.withOpacity(0.3), // Semi-transparent
-            borderRadius: BorderRadius.circular(12), // Redundant here if ClipRRect is used, but good for consistency
-            border: Border.all(color: borderColor.withOpacity(0.2), width: 1), // Subtle border
-          ),
-          child: child,
-        ),
-      ),
-    );
-  }
-
-  // Helper to build the personal information content block
-  Widget _buildPersonalInformationContent(ResumeData resumeData) {
-    final List<Widget> personalInfoWidgets = <Widget>[];
-
-    if (resumeData.name.isNotEmpty) {
-      personalInfoWidgets.add(_buildPreviewText(
-        resumeData.name,
-        style: const TextStyle(color: goldPrimary, fontSize: 36, fontWeight: FontWeight.bold),
-        padding: EdgeInsets.zero, // Padding handled by the outer GlassmorphicContentBlock
-      ));
-    }
-    if (resumeData.jobTitle.isNotEmpty) {
-      personalInfoWidgets.add(_buildPreviewText(
-        resumeData.jobTitle,
-        style: const TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.w600),
-        padding: const EdgeInsets.only(top: 6.0), // Small internal padding for visual separation
-      ));
-    }
-    final String contactInfo = <String>[resumeData.email, resumeData.phone, resumeData.linkedinOrPortfolio]
-        .where((String s) => s.isNotEmpty)
-        .join('  |  ');
-    if (contactInfo.isNotEmpty) {
-      personalInfoWidgets.add(_buildPreviewText(
-        contactInfo,
-        style: const TextStyle(color: textSecondary, fontSize: 14),
-        padding: const EdgeInsets.only(top: 12.0), // Small internal padding for visual separation
-      ));
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: personalInfoWidgets,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ResumeData resumeData = context.watch<ResumeData>();
-
-    final List<String> jobDescriptionPoints = resumeData.jobDescription
-        .split('\n')
-        .where((String s) => s.trim().isNotEmpty)
-        .map<String>((String s) => s.trim().startsWith('•') ? s.trim().substring(1).trim() : s.trim())
-        .toList();
-
-    final List<String> skillsList = resumeData.skills
-        .split(RegExp(r'[,\n]'))
-        .where((String s) => s.trim().isNotEmpty)
-        .map<String>((String s) => s.trim())
-        .toList();
-
-    final bool hasPersonalInfo = resumeData.name.isNotEmpty ||
-        resumeData.jobTitle.isNotEmpty ||
-        resumeData.email.isNotEmpty ||
-        resumeData.phone.isNotEmpty ||
-        resumeData.linkedinOrPortfolio.isNotEmpty;
-
-    return Stack( // Use a stack for background elements
-      children: <Widget>[
-        // --- Abstract Background Elements ---
-        Positioned(
-          top: -50,
-          left: -50,
-          child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: goldGlow.withOpacity(0.05), // Very subtle glow
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: goldGlow.withOpacity(0.08),
-                  blurRadius: 100,
-                  spreadRadius: 50,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: -70,
-          right: -70,
-          child: Container(
-            width: 250,
-            height: 250,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: goldGlow.withOpacity(0.05),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: goldGlow.withOpacity(0.08),
-                  blurRadius: 120,
-                  spreadRadius: 60,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.2,
-          right: MediaQuery.of(context).size.width * 0.1,
-          child: Transform.rotate(
-            angle: 0.2, // Small rotation
+        // Premium Badge
+        if (data["premium"])
+          Positioned(
+            top: 8,
+            left: 8,
             child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: surfaceColor.withOpacity(0.2), // Subtle geometric shape
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: baseBackground.withOpacity(0.2),
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.all(4),
+              color: Colors.amber,
+              child: const Text("PREMIUM",
+                  style: TextStyle(fontSize: 10)),
             ),
           ),
-        ),
-        // Radial Gradient - subtle background lighting
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment.topRight,
-                radius: 1.0,
-                colors: <Color>[
-                  goldGlow.withOpacity(0.03), // Very subtle
-                  baseBackground,
-                ],
-                stops: const <double>[0.0, 0.9],
-              ),
-            ),
+
+        // Selected Overlay
+        if (isSelected)
+          const Positioned(
+            top: 8,
+            right: 8,
+            child: Icon(Icons.check_circle, color: Colors.blue),
           ),
-        ),
-
-        // --- Resume Card (Glassmorphism effect) ---
-        SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0), // Overall vertical and horizontal padding
-          child: Center(
-            child: ClipRRect( // ClipRRect for the main card's rounded corners and blur
-              borderRadius: BorderRadius.circular(24), // Increased rounded corners
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0), // Main card blur
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  padding: const EdgeInsets.all(30),
-                  decoration: BoxDecoration(
-                    color: cardColor.withOpacity(0.4), // Semi-transparent card
-                    borderRadius: BorderRadius.circular(24), // Redundant here if ClipRRect is used, but good for consistency and standalone use.
-                    border: Border.all(color: borderColor.withOpacity(0.3), width: 1), // Subtle border
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: goldGlow.withOpacity(0.2), // Soft glow shadow
-                        blurRadius: 30,
-                        spreadRadius: 8,
-                        offset: const Offset(0, 10),
-                      ),
-                      BoxShadow( // Deeper shadow for elevation
-                        color: baseBackground.withOpacity(0.6),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // --- Header Section (Personal Information) ---
-                      if (hasPersonalInfo)
-                        _buildGlassmorphicContentBlock(
-                          padding: const EdgeInsets.all(24), // Adjusted padding for this block
-                          child: _buildPersonalInformationContent(resumeData),
-                        ),
-                      if (hasPersonalInfo) ...<Widget>[
-                        const SizedBox(height: 24), // Spacing before divider
-                        const Divider(color: borderColor, height: 1, thickness: 0.5), // Thinner divider
-                        const SizedBox(height: 24), // Increased spacing after divider
-                      ],
-
-                      // --- Summary ---
-                      if (resumeData.summary.isNotEmpty) ...<Widget>[
-                        _buildPreviewSectionTitle("Summary"),
-                        _buildGlassmorphicContentBlock(
-                          padding: const EdgeInsets.all(16),
-                          child: _buildPreviewText(
-                            resumeData.summary,
-                            style: const TextStyle(color: textPrimary, fontSize: 14, height: 1.6),
-                            padding: EdgeInsets.zero, // Padding handled by block
-                          ),
-                        ),
-                        const SizedBox(height: 30), // Increased space after section
-                      ],
-
-                      // --- Experience ---
-                      if (resumeData.jobTitle.isNotEmpty || resumeData.jobDescription.isNotEmpty) ...<Widget>[
-                        _buildPreviewSectionTitle("Experience"),
-                        _buildGlassmorphicContentBlock(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              if (resumeData.jobTitle.isNotEmpty)
-                                _buildPreviewText(
-                                  resumeData.jobTitle,
-                                  style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                ),
-                              if (resumeData.company.isNotEmpty || resumeData.jobLocation.isNotEmpty)
-                                _buildPreviewText(
-                                  '${resumeData.company}${resumeData.company.isNotEmpty && resumeData.jobLocation.isNotEmpty ? ' - ' : ''}${resumeData.jobLocation}',
-                                  style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                ),
-                              if (resumeData.jobStartDate.isNotEmpty || resumeData.jobEndDate.isNotEmpty)
-                                _buildPreviewText(
-                                  '${resumeData.jobStartDate}${resumeData.jobStartDate.isNotEmpty && resumeData.jobEndDate.isNotEmpty ? ' - ' : ''}${resumeData.jobEndDate}',
-                                  style: const TextStyle(color: textSecondary, fontSize: 12),
-                                  padding: const EdgeInsets.only(bottom: 12.0), // Spacing before description
-                                ),
-                              if (jobDescriptionPoints.isNotEmpty)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: jobDescriptionPoints.map<Widget>((String point) => _buildGoldBulletPoint(point)).toList(),
-                                ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30), // Increased space after section
-                      ],
-
-                      // --- Education ---
-                      if (resumeData.degree.isNotEmpty || resumeData.educationDetails.isNotEmpty) ...<Widget>[
-                        _buildPreviewSectionTitle("Education"),
-                        _buildGlassmorphicContentBlock(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              if (resumeData.degree.isNotEmpty)
-                                _buildPreviewText(
-                                  resumeData.degree,
-                                  style: const TextStyle(color: textPrimary, fontSize: 16, fontWeight: FontWeight.bold),
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                ),
-                              if (resumeData.university.isNotEmpty || resumeData.educationLocation.isNotEmpty)
-                                _buildPreviewText(
-                                  '${resumeData.university}${resumeData.university.isNotEmpty && resumeData.educationLocation.isNotEmpty ? ' - ' : ''}${resumeData.educationLocation}',
-                                  style: const TextStyle(color: textSecondary, fontSize: 13, fontStyle: FontStyle.italic),
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                ),
-                              if (resumeData.educationStartDate.isNotEmpty || resumeData.educationEndDate.isNotEmpty)
-                                _buildPreviewText(
-                                  '${resumeData.educationStartDate}${resumeData.educationStartDate.isNotEmpty && resumeData.educationEndDate.isNotEmpty ? ' - ' : ''}${resumeData.educationEndDate}',
-                                  style: const TextStyle(color: textSecondary, fontSize: 12),
-                                  padding: const EdgeInsets.only(bottom: 12.0), // Spacing before details
-                                ),
-                              if (resumeData.educationDetails.isNotEmpty)
-                                _buildPreviewText(
-                                  resumeData.educationDetails,
-                                  style: const TextStyle(color: textPrimary, fontSize: 14, height: 1.5),
-                                  padding: EdgeInsets.zero,
-                                ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30), // Increased space after section
-                      ],
-
-                      // --- Skills ---
-                      if (skillsList.isNotEmpty) ...<Widget>[
-                        _buildPreviewSectionTitle("Skills"),
-                        _buildGlassmorphicContentBlock(
-                          padding: const EdgeInsets.all(16),
-                          child: Wrap(
-                            spacing: 12.0, // Increased spacing between chips
-                            runSpacing: 12.0, // Increased run spacing
-                            children: skillsList.map<Widget>((String skill) {
-                              return Chip(
-                                label: Text(skill, style: const TextStyle(color: goldLight, fontSize: 14, fontWeight: FontWeight.w500)), // Larger font, goldLight
-                                backgroundColor: Colors.transparent, // Transparent fill
-                                side: BorderSide(color: goldPrimary.withOpacity(0.5)), // GoldPrimary border
-                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8), // More padding
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), // Pill shape
-                                elevation: 2, // Slight elevation
-                                shadowColor: goldGlow.withOpacity(0.1), // Soft glow for chips
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        const SizedBox(height: 30), // Increased space after skills section
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }

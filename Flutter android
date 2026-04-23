@@ -345,3 +345,221 @@ class _TemplateCard extends StatelessWidget {
     );
   }
 }
+-------------------------------------------------------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:test2/dashboard/resumeform.dart';
+import 'color.dart';
+
+class ResumePreviewWidget extends StatelessWidget {
+  const ResumePreviewWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final data = context.watch<ResumeData>();
+
+    final skills = data.skills
+        .split(RegExp(r'[,\n]'))
+        .where((e) => e.trim().isNotEmpty)
+        .toList();
+
+    final points = data.jobDescription
+        .split('\n')
+        .where((e) => e.trim().isNotEmpty)
+        .toList();
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: Container(
+          width: 900,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 10,
+                color: Colors.black.withOpacity(0.1),
+              )
+            ],
+          ),
+          child: Row(
+            children: [
+
+              /// 🔵 LEFT SIDEBAR
+              Container(
+                width: 260,
+                padding: const EdgeInsets.all(20),
+                color: goldPrimary,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    /// NAME
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    /// CONTACT
+                    _leftTitle("CONTACT"),
+                    _leftText(data.email),
+                    _leftText(data.phone),
+                    _leftText(data.linkedinOrPortfolio),
+
+                    const SizedBox(height: 20),
+
+                    /// SKILLS
+                    if (skills.isNotEmpty) ...[
+                      _leftTitle("SKILLS"),
+                      ...skills.map((s) => _leftText("• $s")),
+                    ],
+                  ],
+                ),
+              ),
+
+              /// ⚪ RIGHT CONTENT
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      /// JOB TITLE
+                      Text(
+                        data.jobTitle,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      /// SUMMARY
+                      if (data.summary.isNotEmpty)
+                        _section(
+                          "PROFILE",
+                          Text(data.summary),
+                        ),
+
+                      /// EXPERIENCE
+                      if (data.jobTitle.isNotEmpty ||
+                          data.company.isNotEmpty)
+                        _section(
+                          "EXPERIENCE",
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.jobTitle,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${data.company} - ${data.jobLocation}",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "${data.jobStartDate} - ${data.jobEndDate}",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              const SizedBox(height: 6),
+                              ...points.map((p) => Text("• $p")),
+                            ],
+                          ),
+                        ),
+
+                      /// EDUCATION
+                      if (data.degree.isNotEmpty)
+                        _section(
+                          "EDUCATION",
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.degree,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${data.university} - ${data.educationLocation}",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "${data.educationStartDate} - ${data.educationEndDate}",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              if (data.educationDetails.isNotEmpty)
+                                Text(data.educationDetails),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// LEFT SIDE TITLE
+  Widget _leftTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14, bottom: 6),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 13,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  /// LEFT SIDE TEXT
+  Widget _leftText(String text) {
+    if (text.isEmpty) return const SizedBox();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white70, fontSize: 12),
+      ),
+    );
+  }
+
+  /// RIGHT SECTION
+  Widget _section(String title, Widget child) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              letterSpacing: 1,
+            ),
+          ),
+          const Divider(),
+          child,
+        ],
+      ),
+    );
+  }
+}

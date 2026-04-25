@@ -1,0 +1,61 @@
+import 'dart:io';
+class bankaccount
+{
+    var balance;
+    void setbalance(var bal)
+    {
+        balance = bal;
+    }
+    void deposit()
+    {
+        print("Enter your depodit ammount :");
+        var depo = int.parse(stdin.readLineSync().toString());
+        balance = balance + depo;
+        print("Total balance is : $balance");
+    }
+      void withdraw()
+    {
+        print("Enter your withdrawl ammount :");
+        var withd = int.parse(stdin.readLineSync()!);
+        if(withd > balance)
+        {
+            print("insufficiant balance");
+        }
+        
+        else
+        {
+        balance = balance - withd;
+        print("Total balance is : $balance");
+        }
+    }
+}
+void main() 
+{
+    print("Enter your bank balance :");
+   var bal = int.parse(stdin.readLineSync().toString());
+   bankaccount b1 = bankaccount();
+    b1.setbalance(bal);
+      while(true)
+  {
+  
+  print("Enter 1 if you want to deposit :");
+  print("Enter 2 if you want to withdrawal :");
+  print("Enter 3 if you want to exit :");
+  var choice = int.parse(stdin.readLineSync().toString());
+  
+  if(choice == 1)
+  {
+   
+  
+   b1.deposit();
+  }
+  else if(choice == 2)
+  { 
+   b1.withdraw();
+}
+else if(choice == 3)
+{
+    break;
+}
+  }
+}

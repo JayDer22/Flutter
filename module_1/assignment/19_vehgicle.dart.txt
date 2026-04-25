@@ -1,0 +1,45 @@
+import 'dart:io';
+
+class Vehicle
+{
+    var type;
+    var fueltype;
+    var maxspeed;
+    Vehicle(this.type,this.fueltype,this.maxspeed);
+    void show()
+    {
+        print("Vehicle type : $type");
+        print("Vehicle fuletype : $fueltype");
+        print("Vehicle maxspeed : $maxspeed");
+    }
+}
+class Car extends Vehicle
+{
+    Car(String fuel,int speed) : 
+    super("Car",fuel,speed);
+}
+class Bike extends Vehicle
+{
+    Bike(String fuel,int speed) : 
+    super("Bike",fuel,speed);
+}
+
+void main() {
+  print("Enter car fule :");
+  var carfuel = stdin.readLineSync()!;
+  print("Enter car speed :");
+  var carspeed = int.parse(stdin.readLineSync().toString()!);
+  print("Enter Bike fule :");
+  var bikefuel = stdin.readLineSync()!;
+  print("Enter Bike speed :");
+  var bikespeed = int.parse(stdin.readLineSync().toString()!);
+  
+  var car = Car(carfuel,carspeed);
+  var bike = Bike(bikefuel,bikespeed);
+  
+  print("\nCar Details :");
+  car.show();
+  
+  print("\Bike Details :");
+  bike.show();
+}

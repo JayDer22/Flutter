@@ -1,0 +1,69 @@
+import 'dart:io';
+
+class Product {
+  var M = 34;
+  var C = 10;
+  var T = 50;
+  var I = 10;
+  var D = 20;
+
+  void display() {
+    print("1. Amul Milk : $M rupees");
+    print("2. Crunchex wafer : $C rupees");
+    print("3. Thums up : $T rupees");
+    print("4. Icecream : $I rupees");
+    print("5. DairyMilk : $D rupees");
+  }
+}
+
+class Cart extends Product {
+  int totalPrice = 0; 
+  void add() {
+    for (int i = 0; i < 5; i++) {
+      print("Enter your product number :");
+      var input = stdin.readLineSync();
+
+      if (input != null) {
+        int choice = int.parse(input);
+
+        switch (choice) {
+          case 1:
+            print("You selected Amul Milk");
+            totalPrice += M;
+            break;
+          case 2:
+            print("You selected Crunchex wafer");
+            totalPrice += C;
+            break;
+          case 3:
+            print("You selected Thums up");
+            totalPrice += T;
+            break;
+          case 4:
+            print("You selected Icecream");
+            totalPrice += I;
+            break;
+          case 5:
+            print("You selected DairyMilk");
+            totalPrice += D;
+            break;
+          default:
+            print("Invalid choice");
+        }
+      }
+    }
+  }
+}
+
+class Order extends Cart {
+  void bill() {
+    print("Your total price is : $totalPrice rupees");
+  }
+}
+
+void main() {
+  Order o = Order();   
+  o.display();
+  o.add();
+  o.bill();            
+}

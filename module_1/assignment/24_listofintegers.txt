@@ -1,0 +1,13 @@
+import 'dart:io';
+
+void main() {
+  try {
+    print("Enter your number :");
+    String input = stdin.readLineSync()!;
+
+    int num = int.parse(input); 
+    print("Number is : $num");
+  } catch (e) {
+    print("You entered a character or invalid input: $e");
+  }
+}

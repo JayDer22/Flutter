@@ -1,0 +1,29 @@
+import 'dart:async';
+Future<String> fetchUser(int id) async
+{
+    await
+    Future.delayed(Duration(seconds:2));
+    return "user $id loaded";
+}
+Future<void> fetchAlluser() async
+{
+    List<String> users = [];
+    
+    for(int i = 1;i <= 3;i++)
+    {
+        String user = await fetchUser(i);
+        users.add(user);
+        print("Fetched: $user");
+    }
+    print("\nAll users loaded");
+    for(var u in users)
+    {
+        print(u);
+    }
+}
+void main() async
+{
+    print("Start fetchin user...\n");
+    await fetchAlluser();
+    print("\nDone");
+}

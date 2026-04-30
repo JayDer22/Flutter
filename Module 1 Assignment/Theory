@@ -1,1 +1,112 @@
+Module 1: Introduction to Mobile Devlopement and Flutter
 
+Theory Assignments:
+
+1). Explain the benifits of using flutter over other cross platform framework.
+ 
+Ans :- -> Flutter is a platform where we just have to write code once and it will work on Android,ios,weband desktop,
+        it saves time and eforrt.
+
+       -> Flutter is a fast devopment platform where the chenges are appears instently withaout closig or restarting app.
+
+       -> In flutter everything is a widget.
+
+       -> Fluttewr is developed bt google so it has strong community support.
+
+2). Describe the role of Dart in Flutter.What are its advanteges for mobile devlopement?
+
+Ans :- Role of dart :
+
+       -> Dart is a programming language which is used to build flutter apps.
+     
+       -> Dart is used for write the logic of entire app.
+
+       Advantages of dart for mobile Devlopment :
+
+       -> Dart syntex are similar to Java/c++ so Biginners can understands it easily.
+
+       -> Dart is a object oriented programming language it's supports Calss,Object,Inheritance.
+
+3). Outline the Set up Flutter Devlopment Environment.
+
+Ans :- Step 1 : Download Flutter SDK
+
+           -> Download The Fltter SDK forn thw official site,
+            then extrect it in Cdrive or whereever you want.
+
+       Step 2 : Set envirnment variables
+
+           -> Add flutter/bin in to system PATH,
+           this lets you Flutter command form anywhere.
+
+       Step 3 : Install Android Studio
+           
+           -> In android studio you can write your code and create your application it's a editor.
+
+       Step 4 : Install the plugins 
+
+           -> Insude the android studio:
+               go to plugins and install 1) Fluuer ,2)Dart.
+       Step 5 : Creat project
+  
+           -> click on create new fluuer project and select the path where you extrected the flutter sdk.
+     
+           -> click on next and give the path where you want to save your projects and click on creat.
+
+4). Describ the basic flutter app structure, explaining main.dart,the main functipon and the widget tree.
+
+Ans :-A basic Flutter app is organized around a few core ideas: the entry point (main.dart),the main() function, and the widget tree. 
+
+      Understanding these gives you a clear mental model of how Flutter builds UI.
+
+        1. main.dart (the entry file) :
+
+          -> main.dart is the starting file of a Flutter app, usually located in the lib/ folder. 
+
+          -> It contains the code that launches your application and defines the root widget.
+
+          -> Think of it as the “front door” of your app. When the app starts, Flutter looks here first.
+
+             A very simple example:
+
+            import 'package:flutter/material.dart';
+
+            void main() {
+                         runApp(MyApp());
+                        }
+
+        2. main() function :
+
+          ->the main function is Starting point of app it Calls runApp().
+        
+             It is the first thing that runs when your app starts.
+
+             Every Dart program must have it.
+
+        3. Widget Tree :
+
+            -> Flutter doesn’t use buttons, screens, layouts separately like other frameworks.
+  
+               In flutter Everything is a widget.
+
+                  It’s just a structure of widgets inside widgets.
+
+                  Like:
+    
+                  One widget contains another
+                  That one contains another
+                  And so on…
+
+                     
+                 MaterialApp
+                  └── Scaffold
+                     ├── AppBar
+                     │    └── Text("My First App")
+                     └── Center
+                          └── Text("Hello, Flutter!")
+
+                   
+                 
+               
+                    
+                    

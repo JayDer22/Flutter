@@ -1,18 +1,16 @@
 import 'dart:io';
 
 void main() async {
-  // File name
   File file = File('example.txt');
 
-  // Data to write
-  String data = "Hello Riddhita!\nWelcome to Dart File Handling.";
-
+  
+  String data = "Hello jay\nWelcome
   try {
-    // Write data to file
+    
     await file.writeAsString(data);
-    print("Data written successfully.\n");
+    print("Data written successfully.");
 
-    // Read data from file
+  
     String content = await file.readAsString();
 
     print("File Content:");

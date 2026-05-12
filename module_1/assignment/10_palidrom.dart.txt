@@ -4,6 +4,6 @@ bool isPalindrome(String str) {
 }
 
 void main() {
-  print(isPalindrome("madam")); // true
-  print(isPalindrome("hello")); // false
+  print(isPalindrome("madam"));
+  print(isPalindrome("hello")); 
 }

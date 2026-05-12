@@ -88,3 +88,153 @@ Ans. -> Controal structure decid that your code when it run, how it run and how 
      					 print("Invalid day");
  						 }
 }   						 }
+
+3). Explain object-oriented programming concepts in Dart, such as classes, inheritance, polymorphism, and interfaces.
+Ans ->.   OOP is a programming method where we use class and object to write programs.
+          Dart supports OOP features.
+          1) Class and object :-
+          -> A class is a blueprint,An object is created from class.
+           Ex. 
+                class Car {
+                      String name = "BMW";
+                          }
+
+                      void main() {
+                              Car c1 = Car();
+
+                                 print(c1.name);
+                              }
+           2). Inheritance
+           Inheritance means one class can use properties and methods of another class.
+           We use extends keyword.
+          Ex 
+
+           class Animal {
+           void sound() {
+           print("Animal Sound");
+                 }
+             }
+
+            class Dog extends Animal {
+              void bark() {
+               print("Dog Bark");
+            }
+          }
+
+             void main() {
+              Dog d = Dog();
+
+           d.sound();
+          d.bark();
+           }
+
+       3). Polymorphism
+          Polymorphism means same method behaves differently.
+          It is done using method overriding.
+            Ex.
+             class Animal {
+                 void sound() {
+               print("Animal Sound");
+               }
+               }
+
+            class Cat extends Animal {
+             @override
+               void sound() {
+                  print("Cat Meow");
+               }
+               }
+
+              void main() {
+                Cat c = Cat();
+
+                 c.sound();
+               }
+
+          4). Interface
+           In Dart, every class can work as interface using implements.
+             Ex.
+             class Animal {
+             void eat() {
+                print("Eating");
+              }
+            }
+
+            class Dog implements Animal {
+              @override
+                 void eat() {
+                 print("Dog eats");
+                  }
+                 }
+
+              void main() {
+                Dog d = Dog();
+
+                d.eat();
+            }
+4)Describe asynchronous programming in Dart, including Future, async, await, and Stream.
+Ans->. 
+        Asynchronous Programming in DartAsynchronous programming is used to perform tasks without stopping the whole             program.
+         It is useful for:
+            API calling
+            File downloading
+            Database fetching
+            Timer functions
+         Dart provides:
+            Future
+            async
+            await
+            Stream
+1. Future
+Future is used when a value will come later.
+Ex.
+Future<String> getData() {
+  return Future.delayed(
+    Duration(seconds: 2),
+    () => "Data Loaded",
+  );
+}
+
+void main() {
+  getData().then((value) {
+    print(value);
+  });
+
+  print("Loading...");
+}
+2. async
+   async keyword makes a function asynchronous.
+Ex.
+    Future<void> showMessage() async {
+      print("Hello");
+      }
+     async allows use of await
+     Function returns Future
+3. await
+    await waits until the Future is completed.
+    It is used inside async function.
+Ex
+   Future<String> getData() async {
+   return "Data Received";
+   }
+
+      void main() async {
+      String data = await getData();
+
+      print(data);
+    }
+
+4. Stream
+     Stream is used to receive multiple values over time.
+      Ex.
+    Stream<int> numbers() async* {
+  for (int i = 1; i <= 5; i++) {
+    yield i;
+  }
+}
+
+void main() async {
+  await for (int value in numbers()) {
+    print(value);
+  }
+}

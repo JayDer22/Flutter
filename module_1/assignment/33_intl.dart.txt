@@ -1,0 +1,12 @@
+import 'package:intl/intl.dart';
+
+void main() {
+
+  double price = 12345.67;
+
+  print(NumberFormat.currency(locale: 'en_US', symbol: '\$').format(price));
+
+  print(NumberFormat.currency(locale: 'hi_IN', symbol: '₹').format(price));
+
+  print(NumberFormat.currency(locale: 'ja_JP', symbol: '¥').format(price));
+}

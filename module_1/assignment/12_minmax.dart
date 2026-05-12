@@ -1,1 +1,27 @@
 
+import'dart:io';
+
+number(int num)
+{
+    int max = 0;
+    int low = 9;
+       
+    
+    while(num>0)
+    {
+        int rem=num%10;
+        if(rem>max)
+        {
+            max=rem;
+        }
+        if(rem<low)
+        {
+           low=rem;  
+        }
+        num=num~/10;
+    }
+         print(max);
+           print(low);
+  
+ 
+}

@@ -1,0 +1,54 @@
+class MyList {
+  List<int> list1 = [1, 2, 3, 4, 5];
+}
+
+class Square extends MyList {
+  int n = 2;
+
+  void A() {
+
+    List<int> result =
+        list1.map((value) => value * n * n).toList();
+
+    print(result);
+  }
+}
+
+class Cube extends MyList {
+
+  int i = 3;
+
+  void B() {
+
+    List<int> result2 =
+        list1.map((value) => value * i * i * i).toList();
+
+    print(result2);
+  }
+}
+class Half extends MyList {
+
+  double h = 2;
+
+  void C() {
+
+    List<double> result =
+        list1.map((value) => value / h).toList();
+
+    print(result);
+  }
+}
+
+
+
+void main() {
+
+  Square s1 = Square();
+  s1.A();
+
+  Cube c1 = Cube();
+  c1.B();
+  
+  Half h1 = Half();
+  h1.C();
+}

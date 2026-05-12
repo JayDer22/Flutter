@@ -1,0 +1,39 @@
+import 'dart:io';
+import 'dart:math';
+
+void main() {
+
+  
+  int secretNumber = Random().nextInt(100) + 1;
+
+  print("=== Number Guessing Game ===");
+  print("Guess a number between 1 and 100");
+
+  
+  var hint = (int guess) =>
+      guess > secretNumber
+          ? "Too High!"
+          : guess < secretNumber
+              ? "Too Low!"
+              : "Correct Guess!";
+
+  int attempts = 0;
+
+  while (true) {
+
+    stdout.write("Enter your guess: ");
+
+    int userGuess = int.parse(stdin.readLineSync()!);
+
+    attempts++;
+
+    String result = hint(userGuess);
+
+    print(result);
+
+    if (userGuess == secretNumber) {
+      print("You guessed the number in $attempts attempts.");
+      break;
+    }
+  }
+}

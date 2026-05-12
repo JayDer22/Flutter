@@ -1,0 +1,10 @@
+void main() {
+
+  List<int> list1 = [1,2,3,4,5];
+  List<int> list2 = [9,8,7,2,4];
+  List<int> list3 = [5,6,0,8,9];
+  List<int> numbers = [...list1, ...list2, ...list3];
+  numbers = numbers.toSet().toList();
+  numbers.sort();
+  print(numbers);
+}

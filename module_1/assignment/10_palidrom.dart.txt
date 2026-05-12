@@ -1,20 +1,9 @@
-
-fibonacci(int n) {
-  if (n <= 1) {
-    return n;
-  }
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
-
-
- printFibonacciSeries(int n) {
-  for (int i = 0; i < n; i++) {
-    print(fibonacci(i));
-  }
+bool isPalindrome(String str) {
+  String rev = str.split('').reversed.join('');
+  return str == rev;
 }
 
 void main() {
-  int terms = 10; 
-  print("Fibonacci Series up to $terms terms:");
-  printFibonacciSeries(terms);
+  print(isPalindrome("madam")); // true
+  print(isPalindrome("hello")); // false
 }

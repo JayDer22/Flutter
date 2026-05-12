@@ -1,0 +1,17 @@
+Future Sum(int seconds, String msg) {
+  final duration = Duration(seconds: seconds);
+  return Future.delayed(duration).then((value) => msg);
+}
+
+void main() async {
+  var i = 10;
+  var j = 10;
+
+  print("Sum of i and j");
+  print("wait 3 seconds");
+  await Sum(3, "Sum of i and j is").then((status) {
+    print(status);
+  });
+
+  print(i + j);
+}

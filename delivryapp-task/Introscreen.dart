@@ -1,0 +1,379 @@
+import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'loginscreen.dart';
+
+class Introscreen extends StatefulWidget {
+  const Introscreen({super.key});
+
+  @override
+  State<Introscreen> createState() => _IntroscreenState();
+}
+
+class _IntroscreenState extends State<Introscreen> {
+
+  late SharedPreferences sharedPreferences;
+
+  bool newuser = true;
+
+  bool isloading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkvalue();
+  }
+
+  checkvalue() async {
+
+    sharedPreferences = await SharedPreferences.getInstance();
+
+    newuser = sharedPreferences.getBool("Get Started") ?? false;
+
+    if (newuser == true) {
+
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Loginscreen(),
+        ),
+      );
+
+    } else {
+
+      setState(() {
+        isloading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    if (isloading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    return IntroductionScreen(
+
+      globalBackgroundColor: Colors.orange.shade400,
+
+      pages: [
+
+        // ================= FOOD =================
+
+        PageViewModel(
+
+          titleWidget: const SizedBox(),
+
+          bodyWidget: SingleChildScrollView(
+            child: Column(
+              children: [
+
+                const SizedBox(height: 40),
+
+                Container(
+                  height: 220,
+                  width: 220,
+
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade300,
+                    shape: BoxShape.circle,
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+
+                    child: Image.asset(
+                      "assets/img_1.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+
+                  child: const Column(
+                    children: [
+
+                      Text(
+                        "Make Your Own Food\nStay at Home",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Text(
+                        "Order your favorite meals anytime,\nanywhere with ease.",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // ================= DRINKS =================
+
+        PageViewModel(
+
+          titleWidget: const SizedBox(),
+
+          bodyWidget: SingleChildScrollView(
+            child: Column(
+              children: [
+
+                const SizedBox(height: 40),
+
+                Container(
+                  height: 220,
+                  width: 220,
+
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade300,
+                    shape: BoxShape.circle,
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+
+                    child: Image.asset(
+                      "assets/img_2.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+
+                  child: const Column(
+                    children: [
+
+                      Text(
+                        "Get Delivery at Your\nFood Step",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Text(
+                        "Enjoy your favorite juices,\ncoffees and cold beverages anytime.",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // ================= DESSERT =================
+
+        PageViewModel(
+
+          titleWidget: const SizedBox(),
+
+          bodyWidget: SingleChildScrollView(
+            child: Column(
+              children: [
+
+                const SizedBox(height: 40),
+
+                Container(
+                  height: 220,
+                  width: 220,
+
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade300,
+                    shape: BoxShape.circle,
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+
+                    child: Image.asset(
+                      "assets/img_3.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+
+                  padding: const EdgeInsets.all(20),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+
+                  child: const Column(
+                    children: [
+
+                      Text(
+                        "Sweet Desserts\nFor Happiness",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Text(
+                        "Delicious desserts made to\nbring happiness in every bite.",
+
+                        textAlign: TextAlign.center,
+
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
+      ],
+
+      showSkipButton: true,
+
+      skip: const Text(
+        "Skip",
+        style: TextStyle(color: Colors.black),
+      ),
+
+      next: Container(
+
+        padding: const EdgeInsets.all(12),
+
+        decoration: const BoxDecoration(
+          color: Colors.brown,
+          shape: BoxShape.circle,
+        ),
+
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Colors.orange,
+        ),
+      ),
+
+      done: SizedBox(
+        child: Column(
+          children: [
+
+            ElevatedButton(
+
+              onPressed: () async {
+
+                SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+
+                await prefs.setBool("Get Started", true);
+
+                if (!context.mounted) return;
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Loginscreen(),
+                  ),
+                );
+              },
+
+              child: const Text("Get Started"),
+            ),
+          ],
+        ),
+      ),
+
+      onDone: () {},
+
+      dotsDecorator: DotsDecorator(
+
+        activeColor: Colors.white,
+
+        color: Colors.orange.shade100,
+
+        size: const Size(10, 10),
+
+        activeSize: const Size(25, 10),
+
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+  }
+}

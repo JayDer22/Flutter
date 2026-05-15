@@ -1,0 +1,54 @@
+ 1)When we use const constructors in Flutter, the app becomes a little faster and smoother while scrolling.Why?
+
+   Ans -> Because Flutter does not need to create the same widget again and again every time the screen rebuilds.
+          Normally, when scrolling happens, Flutter rebuilds many widgets.
+  
+ 2)Explain why InheritedWidget (or Provider) outperforms "lifting state up" forcross-tab data.
+
+   Ans -> When we use “lifting state up”, we keep the data in a parent widget and pass it down to many child widgets using constructors.
+          This works fine for small apps.But in bigger apps, especially with multiple tabs, it becomes slow and messy.
+          Because every time the data changes, many widgets rebuild again — even widgets that don’t need the update.
+
+ 3)Explain the difference between MainAxisAlignment and CrossAxisAlignment in a Row.
+
+   Ans -> In a Row, there are 2 directions:
+
+          Horizontal direction → called the main axis
+          Vertical direction → called the cross axis
+
+          So:
+ 
+         MainAxisAlignment controls widgets left and right
+         CrossAxisAlignment controls widgets up and down.
+  
+ 4)Explain why a Stack widget is used for overlaying UI elements.
+ 
+
+   Ans -> A Stack widget in Flutter is used when we want to place widgets on top of each other (overlay).
+
+         Normally, widgets in Row or Column are arranged side by side or one below another.
+
+         But sometimes we need designs like:
+
+         text on an image
+         button over a photo
+         notification badge on an icon
+         loading spinner over screen
+
+         That is where Stack is useful. 
+
+ 5)Explain the role of ValueKey when reordering items in a list.
+
+   Ans -> ValueKey helps Flutter identify widgets correctly when items in a list change position or get reordered.
+  
+          Without keys, Flutter can get confused.
+  
+          It may think:
+     
+          “This is the same widget, just moved.”
+  
+          Because of that:
+ 
+          wrong data can appear
+          UI state can mix up
+          animations may behave strangely

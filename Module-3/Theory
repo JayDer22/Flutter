@@ -1,0 +1,148 @@
+1)Explain the difference between Stateless and Stateful widgets with examples.
+ Ans -> 
+        Stateless Widget :-
+
+        A Stateless widget is a widget that cannot change its data after the app starts.
+        It is fixed and does not update automatically.
+
+        Example:
+           Text(
+        "Hello Flutter",
+          )
+
+        In this example, the text stays the same.
+
+        Features:
+        Static data
+        Cannot change UI dynamically
+        Simple and lightweight
+  
+        Stateful Widget :-
+  
+        Stateful Widget
+
+        A Stateful widget is a widget that can change its data during runtime.
+        It updates the UI when the state changes.
+ 
+        Example:
+        int count = 0;
+
+        When the value of count changes, the screen updates.
+
+        Features:
+        Dynamic data
+        UI can change
+        Uses setState().
+ 2)Describe the widget lifecycle and how state is managed in Stateful widgets. 
+  Ans ->
+        The widget lifecycle means the different stages a Stateful widget goes through from creation to removal.
+        1. createState()
+
+        This method creates the state object.
+
+        createState()
+        2. initState()
+ 
+        Called only once when the widget starts.
+  
+        Used for:
+
+        API calls
+        Initial data setup
+        @override
+        void initState() {
+         super.initState();
+         }
+        3. build()
+
+        Builds the UI of the widget.
+
+         @override
+         Widget build(BuildContext context) {
+        return Container();
+        }
+       4. setState()
+
+       Updates the UI when data changes.
+
+       setState(() {
+        count++;
+       });
+      5. dispose()
+
+         Called when the widget is removed from the screen.
+
+        Used to:
+   
+       Close controllers
+       Free memory
+       @override
+       void dispose() {
+       super.dispose();
+         }
+
+3)List and describe five common Flutter layout widgets (e.g., Container, Column, Row).
+  Ans ->
+        1. Container
+
+        Container is used to design and style widgets.
+      
+        It can add:
+
+        Height
+        Width
+        Color
+        Padding
+        Margin
+         Example:
+        Container(
+        height: 100,
+        width: 100,
+         color: Colors.blue,
+         )
+        2. Row
+
+        Row arranges widgets horizontally.
+ 
+        Example:
+         Row(
+           children: [
+             Icon(Icons.home),
+             Text("Home"),
+            ],
+          )
+        3. Column
+
+        Column arranges widgets vertically.
+
+            Example:
+         Column(
+         children: [
+             Text("Name"),
+             Text("Email"),
+            ],
+          )
+        4. Stack
+   
+         Stack places widgets on top of each other.
+
+         Example:
+          Stack(
+         children: [
+          Container(color: Colors.blue),
+          Text("Hello"),
+          ],
+         )
+       5. ListView
+   
+        ListView displays scrollable items.
+
+       Example:
+        ListView(
+        children: [
+         Text("Item 1"),
+         Text("Item 2"),
+         ],
+         )
+
+         These layout widgets help developers create different UI designs in Flutter.

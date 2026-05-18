@@ -1,0 +1,62 @@
+1)  Explain how the Navigator widget works in Flutter.
+Ans ->
+       In Flutter, the Navigator widget is used to move from one screen to another screen.
+       You can think of it like pages in a book.
+
+       When a new screen opens, it is added on top of the previous screen.
+       When you go back, the top screen is removed.
+
+       Flutter manages screens using something called a stack.
+
+       Simple Example
+
+       Suppose you are on a Login Screen and want to open the Home Screen.
+
+       Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+           ),
+         );
+
+2) Describe the concept of named routes and their advantages over direct route navigation.
+Ans ->
+      Named routes are routes given with a unique name (string).
+      Instead of directly writing the screen class every time, we use route names.
+
+      Example of Named Routes
+      Step 1: Define Routes
+      MaterialApp(
+       initialRoute: '/',
+        routes: {
+         '/': (context) => LoginScreen(),
+         '/home': (context) => HomeScreen(),
+         '/profile': (context) => ProfileScreen(),
+         },
+        );
+
+3) Explain how data can be passed between screens using route arguments
+Ans -> 
+      Sometimes we need to send information from one screen to another screen in Flutter.
+
+       For example:
+
+      Sending username from Login Screen to Home Screen.
+      Sending product details to Product Screen.
+      Data can be passed using constructor also.
+       This is called passing data between screens.
+
+       Flutter allows us to pass data using route arguments.
+
+       Example
+       Sending Data
+       Navigator.pushNamed(
+       context,
+        '/home',
+         arguments: "Hetvi",
+       );
+      
+      Explanation
+         pushNamed() opens another screen.
+         arguments: is used to send data.
+         Here, "Hetvi" is being sent to the Home Screen.

@@ -1,129 +1,79 @@
+Create a premium cinematic Lottie splash screen animation for a futuristic courier delivery mobile app called “SwiftEx Courier”.
 
-import 'package:flutter/material.dart';
+STYLE:
+Ultra-modern neon cyberpunk aesthetic, dark purple-blue futuristic environment, glowing roads, cinematic lighting, smooth premium UI motion graphics, high-end startup branding animation.
 
-class Shoppingex1 extends StatefulWidget {
-  const Shoppingex1({super.key});
+FORMAT:
+Vertical mobile splash screen (1080x1920), 6 seconds duration, 60 FPS, optimized for Flutter Lottie JSON export.
 
-  @override
-  State<Shoppingex1> createState() => _Shoppingex1State();
-}
+BACKGROUND:
+- Deep dark navy-black gradient background (#020617 to #0F172A)
+- Futuristic glowing city skyline silhouette
+- Small floating glowing particles/stars
+- Purple ambient lighting
+- Subtle atmospheric fog
+- Neon reflections on the ground
 
-class _Shoppingex1State extends State<Shoppingex1> {
-  final List<String> imageUrls = [
-    "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
-    "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77",
-    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
-    "https://images.unsplash.com/photo-1483985988355-763728e1935b",
-    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
-    "https://images.unsplash.com/photo-1584917865442-de89df76afd3",
-    "https://images.unsplash.com/photo-1523170335258-f5ed11844a49",
-    "https://images.unsplash.com/photo-1483985988355-763728e1935b",
-  ];
+SCENE 1 (0s–1.5s):
+- Camera slowly zooms into futuristic city
+- Neon route line begins glowing softly
+- GPS map grid fades in
+- Tiny particles float slowly
+- Smooth cinematic fade-in
 
-  int cartCount = 0;
+SCENE 2 (1.5s–2.5s):
+- Bright neon GPS location pin drops from top center
+- Pin lands with bounce easing
+- Circular ripple pulse expands on ground
+- Purple-blue glow spreads outward
+- Soft lighting interaction on floor
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Shopping Cart",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
+SCENE 3 (2.5s–4s):
+- Premium futuristic courier truck enters smoothly from left
+- Truck follows curved glowing neon route
+- Wheels rotate realistically
+- Motion blur behind truck
+- Headlights cast soft light beams
+- Reflection visible on road surface
+- Neon underglow beneath truck
 
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                const Icon(
-                  Icons.shopping_cart,
-                  size: 30,
-                ),
+SCENE 4 (4s–5s):
+- Animated delivery route draws dynamically
+- Small tracking dots move along route
+- Floating package icons appear briefly
+- Background skyline pulses softly
+- Route emits glowing energy effect
 
-                if (cartCount > 0)
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      cartCount.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
+SCENE 5 (5s–6s):
+- Truck stops below center logo position
+- SwiftEx logo appears with scale-up effect
+- Strong neon glow burst behind logo
+- Text “SwiftEx Courier” fades in smoothly
+- Tagline appears:
+  “Delivering Happiness, Every Mile”
+- Final cinematic ambient pulse across screen
 
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          itemCount: imageUrls.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 0.7,
-          ),
-          itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(10),
-                      ),
-                      child: Image.network(
-                        imageUrls[index],
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+COLOR PALETTE:
+Primary Purple: #7C3AED
+Bright Violet: #8B5CF6
+Cyan Accent: #06B6D4
+Neon Blue: #22D3EE
+Background Dark: #020617
 
-                  const SizedBox(height: 8),
+ANIMATION STYLE:
+- Smooth easing
+- Cinematic timing
+- Premium startup branding
+- High-quality motion graphics
+- Soft bloom glow
+- Realistic motion curves
+- Clean professional transitions
 
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        cartCount++;
-                      });
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Item ${index + 1} added to cart",
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text("Add to Cart"),
-                  ),
-
-                  const SizedBox(height: 8),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+IMPORTANT:
+- No cartoon style
+- No cheap bounce effects
+- No flat minimal design
+- Must feel like a real billion-dollar logistics startup app intro
+- Professional commercial-quality motion design
+- Lottie-compatible vector animation
+- High detail and polished lighting

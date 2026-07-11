@@ -11,7 +11,8 @@
     $value["product_price"]= $data["product_price"];
     $value["product_des"]= $data["product_des"];
     $value["product_featurs"]= $data["product_featurs"];
-    
+    $value["product_image"]= $data["product_image"];
+
      array_push($response,$value);
   }
  

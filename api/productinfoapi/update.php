@@ -22,8 +22,8 @@ $upload_url = 'https://' . $_SERVER['SERVER_NAME'] . "/jay/" . $upload_path;
 
     $file_path = $upload_path . $random . '.' . $extension;
 
-    move_uploaded_file($_FILES["product_image"]["tmp_name"], $file_path)
-        $pimage = $file_url;
+    move_uploaded_file($_FILES["product_image"]["tmp_name"], $file_path);
+    $pimage = $file_url;
     
 
 

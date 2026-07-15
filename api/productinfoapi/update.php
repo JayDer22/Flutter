@@ -45,7 +45,7 @@ else
          product_name='$pname',
          product_price='$pprice',
          product_des='$pdes',
-         product_featurs='$pfeaturs',
+         product_featurs='$pfeaturs'
          WHERE id='$id'";
     }
 

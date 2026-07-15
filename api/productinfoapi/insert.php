@@ -33,7 +33,7 @@ else
     $sql = "INSERT INTO product_info
     (product_name,product_price,product_des,product_featurs,product_image)
     VALUES
-    ('$pname','$pprice','$pdes','$pfeaturs','$pimage')";
+    ('$pname','$pprice','$pdes','$pfeaturs','$file_url')";
 
     if(mysqli_query($con,$sql))
     {

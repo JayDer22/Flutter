@@ -3,7 +3,7 @@
 include('connect.php');
 
 $upload_path = "images/";
-$upload_url = "http://".$_SERVER['SERVER_NAME']."/jay/".$upload_path;
+$upload_url = "https://".$_SERVER['SERVER_NAME']."/jay/".$upload_path;
 
 $id = $_POST['id'];
 $pname = $_POST['product_name'];
@@ -12,7 +12,7 @@ $pdes = $_POST['product_des'];
 $pfeaturs = $_POST['product_featurs'];
 
 
-if($id=="" || $pname=="" || $pprice=="" || $pdes=="" || $pfeatures=="")
+if($id=="" || $pname=="" || $pprice=="" || $pdes=="" || $pfeaturs=="")
 {
     echo "0";
 }

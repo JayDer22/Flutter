@@ -1,18 +1,32 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
-void main() {
+class RestaurantPage extends StatelessWidget {
+  const RestaurantPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text("Restaurant App"),
+      ),
+    );
+  }
+}
+
+void getRestaurantData() {
+
+
   String jsonString = '''
   {
     "id": 101,
     "name": "Spice Garden",
-    "cuisine": "North Indian",
-    "rating": 4.5,
-    "isOpen": true
+    "cuisine": "North Indian"
   }
   ''';
 
   Map<String, dynamic> restaurant = jsonDecode(jsonString);
 
-  print("Restaurant Name: ${restaurant['name']}");
-  print("Cuisine Type: ${restaurant['cuisine']}");
+  print(restaurant["name"]);
+  print(restaurant["cuisine"]);
 }

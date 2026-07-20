@@ -1,0 +1,8 @@
+API: Cat Facts API
+
+Endpoint URL:
+https://catfact.ninja/facts
+
+Description:
+This endpoint returns a list of cat facts in JSON format. 
+Each item contains a fact about cats, making it suitable for applications that display animal trivia or for practicing API integration.

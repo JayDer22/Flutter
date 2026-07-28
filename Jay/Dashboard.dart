@@ -1,61 +1,49 @@
-import 'package:flutter/material.dart';
+Requirements
+Develop the application using Flutter and Dart.
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+Follow the MVVM architecture.
 
-  @override
-  State<Dashboard> createState() => _DashboardState();
-}
+Use a suitable networking approach such as Dio or the http package for API communication.
 
-class _DashboardState extends State<Dashboard> {
+Use async/await for asynchronous operations.
 
-  int selectedIndex = 0;
+Parse API responses using appropriate Dart models and JSON serialization.
 
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
+Implement loading, error, and empty states.
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "All Files",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-        ),
-      ),
+Support searching weather by city.
 
-      body: Center(
+Display the following on the city details screen:
 
-      ),
+Current weather information.
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
+Hourly (time-wise) temperature forecast.
 
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library,color: Colors.black),
-            label: 'Images',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.video_library,color: Colors.black),
-            label: 'Videos',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.music_note,color: Colors.black,),
-            label: 'Music',
-            backgroundColor: Colors.purple,
-          ),
-        ],
-      ),
-    );
-  }
-}
+7-day weather forecast.
+
+Ensure the hourly forecast is presented in a horizontal scrolling list, showing:
+
+Time.
+
+Weather icon.
+
+Temperature.
+
+Ensure the code is clean, well-structured, reusable, and maintainable.
+
+Follow Flutter best practices for responsive UI and widget composition.
+
+Bonus (Optional)
+Current location support.
+
+Recent searches.
+
+Temperature unit switch (°C/°F).
+
+Smooth animations.
+
+Accessibility support.
+
+
+
+  https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m&models=dwd_icon_seamless

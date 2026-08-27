@@ -1,0 +1,86 @@
+Question 1 :-
+
+Explain how you would design Dart model classes to map this nested JSON response.
+How would you implement fromJson() constructors to handle optional fields without causing null
+pointer exceptions?
+
+Ans :-
+
+For a food delivery app, I would create separate Dart model classes that represent the structure of the nested JSON response.
+For example, a Restaurant can contain a list of Category objects, and each Category can contain a list of MenuItem objects. 
+Each model would have a fromJson() factory constructor to convert the JSON Map into a Dart object.
+Fields that may be missing would be declared nullable using ?, and null-aware operators such as ?
+. and default values using ?? would be used to safely handle missing fields and avoid null pointer exceptions.For a food delivery app,
+I would create separate Dart model classes that represent the structure of the nested JSON response.
+For example, a Restaurant can contain a list of Category objects, and each Category can contain a list of MenuItem objects.
+Each model would have a fromJson() factory constructor to convert the JSON Map into a Dart object. 
+Fields that may be missing would be declared nullable using ?, and null-aware operators such as ?. and default values using ?? would be used to safely handle missing fields and avoid null pointer exceptions.
+
+Question 2 :-
+
+How would you differentiate between a client-side network failure and a server-side
+HTTP error in Flutter? What strategy would you apply to give the user a meaningful experience —
+rather than a crash — when the API call fails?
+
+Ans :-
+
+In Flutter, I would differentiate a client-side network failure from a server-side HTTP error by checking whether an HTTP response was received. 
+If there is no response, such as when the device is offline, DNS fails, or a connection cannot be established, it is a client-side network failure.
+If a response is received with a status code such as 408 (Request Timeout) or 503 (Service Unavailable), it is a server-side HTTP error.
+I would handle API calls using try-catch, show a meaningful error message instead of allowing the app to crash, and provide a retry option.
+For temporary errors such as 408 and 503, I would use retry logic with a short delay or exponential backoff. I would also preserve the existing order status when possible so the user can continue using the app while the request is retried.
+
+Question 3 :-
+
+How does Firebase Authentication manage session persistence in Flutter? What
+mechanism would you use at app launch to check the current auth state and redirect the user
+to the correct screen accordingly?
+
+Ans :-
+
+Firebase Authentication automatically persists the user's authentication session across app restarts, 
+so the user normally does not need to log in again until they sign out or the session becomes invalid.
+At app launch, I would use FirebaseAuth.instance.authStateChanges() to listen for the current authentication state.
+Using a StreamBuilder, I can display a loading screen while Firebase initializes, navigate authenticated users to the appropriate screen, and redirect unauthenticated users to the login screen.
+For deep links such as checkout, I would check the authentication state before allowing access and redirect unauthenticated users to login, optionally preserving the intended checkout route so they can continue after signing in.
+
+Question 4 :-
+
+Explain how StreamBuilder works with a Firestore document listener. What are the
+advantages of this real-time approach compared to polling the backend with periodic GET
+requests every few seconds?
+
+Ans :-
+
+StreamBuilder can be used with Firestore's snapshots() listener to receive real-time updates from an order document.
+The Firestore document is exposed as a Stream, and whenever the document changes, the stream sends new data to StreamBuilder, which rebuilds the relevant UI automatically.
+Therefore, when the order status changes from Preparing to Out for Delivery and then Delivered, the customer sees the changes without refreshing the screen.
+This approach is better than polling because polling repeatedly sends GET requests even when the data has not changed, can introduce delays depending on the polling interval, and increases network usage. 
+A Firestore real-time listener provides faster updates, avoids unnecessary repeated requests, and gives the user a smoother real-time tracking experience.
+
+Question 5 :-
+
+How would you model the cart feature using Cubit? Define the states the Cubit
+should emit and explain how the UI would respond to each state transition when a customer
+adds an item to the cart.
+
+Ans :-
+
+I would manage the cart using a CartCubit so that the cart has a single source of truth shared by all screens. The Cubit could emit states such as CartInitial, CartLoading, CartLoaded, and CartError.
+The CartLoaded state would contain the cart items, subtotal, discount, and final total.
+When a customer adds an item, the UI calls CartCubit.addItem(). The Cubit updates the item list, recalculates the subtotal and total, and emits a new CartLoaded state. 
+Widgets using BlocBuilder listen to the Cubit and automatically rebuild when the new state is emitted. Therefore, the home, cart, and checkout screens all receive the same updated cart data, avoiding the inconsistent UI updates that can occur when using separate setState() calls.
+
+Question 6 :-
+
+ Describe the three layers of clean architecture as they apply to a 'Fetch Restaurant
+List' feature. Which layer holds the API call, which holds the business rule, and which renders the
+data? Why does data flow in one direction only?
+
+Ans :-
+
+Clean Architecture separates the feature into three layers: Presentation, Domain, and Data. For a "Fetch Restaurant List" feature,
+the Data layer is responsible for making the REST API call, receiving JSON, and converting it into models.
+The Domain layer contains the business rules and use cases, such as filtering restaurants based on whether they are open or available. 
+The Presentation layer manages the Flutter UI and renders the restaurant list, often using a state-management solution such as Cubit or Bloc.
+Data flows in one direction to maintain separation of responsibilities and reduce coupling. This makes each layer easier to test, modify, and maintain because a change in the API does not require changing the business logic or UI.
